@@ -17,7 +17,7 @@ namespace PhotoAlbum.WEB.Controllers
     [Authorize]
     public class PhotoController : Controller
     {
-        private int PageSize = 5;
+        private int PageSize = 9;
         private IMapper _mapper;
         public PhotoController(IPhotoService photoService)
         {

@@ -2,5 +2,33 @@
 @{
     ViewBag.Title = "Home Page";
 }
+<div class="jumbotron text-center">
+    <h1>Hello, dear user!</h1>
+    <p>Our service will allow you to easily share photos with your friends. Live brightly!</p>
+</div>
 
-<h2>@User.Identity.Name @User.Identity.AuthenticationType @User.Identity.GetUserId()</h2>
+@if (!User.Identity.IsAuthenticated)
+{
+    <div class="row">
+        <div class="col-md-6 text-center">
+            <div class="btn btn-lg">@Html.ActionLink("Sign in", "Login", "Account")</div>
+        </div>
+        <div class="col-md-6 text-center">
+            <div class="btn btn-lg">@Html.ActionLink("Sign up", "Register", "Account")</div>
+        </div>
+    </div>
+
+
+}
+else
+{
+
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <div class="btn btn-lg">@Html.ActionLink("My photo", "Photos", "Photo")</div>
+        </div>
+    </div>
+
+}
+
+
