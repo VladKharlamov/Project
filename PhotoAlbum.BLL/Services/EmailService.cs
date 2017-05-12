@@ -7,6 +7,9 @@ using MimeKit;
 using PhotoAlbum.BLL.Infrastructure;
 using PhotoAlbum.BLL.Interfaces;
 using PhotoAlbum.DAL.Interfaces;
+using Microsoft.Owin.Security.DataProtection;
+using Microsoft.AspNet.Identity.Owin;
+using PhotoAlbum.DAL.Entities;
 
 namespace PhotoAlbum.BLL.Services
 {
@@ -44,9 +47,9 @@ namespace PhotoAlbum.BLL.Services
 
         public string GenerateEmailConfirmationToken(string email)
         {
+
             return Database.UserManager.GenerateEmailConfirmationToken(
-                    Database.UserManager.FindByName(email).Id);
-                //Database.UserManager.Users.Where(p=>p.Id==id).Single());
+                    Database.UserManager.FindByEmailAsync(email).Result.Id);
         }
 
         public async Task<OperationDetails> ConfirmEmailAsync(string userId, string code)
@@ -54,11 +57,11 @@ namespace PhotoAlbum.BLL.Services
             var user = await Database.UserManager.FindByIdAsync(userId);
             if (user == null)
             {
-                return new OperationDetails(false, "Пользователь не найден", "");
+                return new OperationDetails(false, "User not found", "");
             }
             var result = await Database.UserManager.ConfirmEmailAsync(userId, code);
 
-            return new OperationDetails(true, "Успех", "");
+            return new OperationDetails(true, "Successful", "");
 
         }
         public async Task<OperationDetails> CheckConfirmEmailAsync(string userName)
@@ -66,7 +69,7 @@ namespace PhotoAlbum.BLL.Services
             var user = await Database.UserManager.FindByNameAsync(userName);
             if (user == null)
             {
-                return new OperationDetails(false, "Пользователь не найден", "");
+                return new OperationDetails(false, "User not found", "");
             }
             if(await Database.UserManager.IsEmailConfirmedAsync(user.Id))
             return new OperationDetails(true, "Успех", "");

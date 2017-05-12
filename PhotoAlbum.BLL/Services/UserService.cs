@@ -29,57 +29,44 @@ namespace PhotoAlbum.BLL.Services
             ApplicationUser user = await _db.UserManager.FindByEmailAsync(userBll.Email);
             if (user == null)
             {
-                user = new ApplicationUser { Email = userBll.Email, UserName = userBll.UserName };
+
+                user = new ApplicationUser { Email = userBll.Email, UserName = userBll.Email };
                 var result = await _db.UserManager.CreateAsync(user, userBll.Password);
                 if (result.Errors.Count() > 0)
                     return new OperationDetails(false, result.Errors.FirstOrDefault(), "");
-                // добавляем роль
+
                 await _db.UserManager.AddToRoleAsync(user.Id, userBll.Role);
-                // создаем профиль клиента
-                ClientProfile clientProfile = new ClientProfile { Id = user.Id, Bithday = userBll.Bithday, Name = userBll.Name };
+
+                ClientProfile clientProfile = new ClientProfile
+                {
+                    Id = user.Id,
+                    Bithday = userBll.Bithday,
+                    Name = userBll.Name
+                };
                 _db.ClientManager.Create(clientProfile);
                 await _db.SaveAsync();
-                return new OperationDetails(true, "Регистрация успешно пройдена", "");
+                return new OperationDetails(true, "The registration was successful", "");
             }
-            else
-            {
-                
-                return new OperationDetails(false, "Пользователь с таким логином уже существует", "Email");
-            }
+            return new OperationDetails(false, "Email is already exists.", "Email");
         }
 
         public async Task<ClaimsIdentity> Authenticate(UserBLL userBll)
         {
             ClaimsIdentity claim = null;
-            // находим пользователя
-            ApplicationUser user = await _db.UserManager.FindAsync(userBll.UserName, userBll.Password);
-            // авторизуем его и возвращаем объект ClaimsIdentity
+
+            ApplicationUser user = await _db.UserManager.FindAsync(userBll.Email, userBll.Password);
+
             if (user != null)
                 claim = await _db.UserManager.CreateIdentityAsync(user,
                                             DefaultAuthenticationTypes.ApplicationCookie);
+            claim.AddClaim(new Claim("Name", user.ClientProfile.Name));
+
             return claim;
         }
-
-
-        // public bool ConfirmEmail(string Token, string Email)
-        //{
-
-        //}
-
 
         public IEnumerable<UserBLL> GetAllUsers()
         {
             return _db.ClientManager.GetAll().Select(_mapper.Map<ClientProfile, UserBLL>);
-            //return _db.ClientManager.GetAll().Select(p => new UserBLL
-            //{
-            //    Id = p.Id,
-            //    Name = p.Name,
-            //    Address = p.Address,
-            //    Email = p.ApplicationUser.Email,
-            //    UserName = p.ApplicationUser.UserName,
-            //    Password = p.ApplicationUser.PasswordHash,
-            //    Role = _db.RoleManager.FindById(p.ApplicationUser.Roles.First(p2=>p2.UserId==p.Id).RoleId).Name
-            //});
         }
 
         public async Task SetInitialData(UserBLL adminBll, List<string> roles)
@@ -121,22 +108,22 @@ namespace PhotoAlbum.BLL.Services
             }
         }
 
-        public OperationDetails ConfirmEmail( string currentPassword, string newPassword)
-        {
-            try
-            {
-                
-                _db.SaveAsync();
-                return new OperationDetails(true, "Пароль успешно изменен", "");
+        //public OperationDetails ConfirmPasswordEmail( string currentPassword, string newPassword)
+        //{
+        //    try
+        //    {
 
-            }
-            catch (Exception e)
-            {
-                return new OperationDetails(false, "Проверьте введенные данные", "");
-            }
-        }
+        //        _db.SaveAsync();
+        //        return new OperationDetails(true, "Пароль успешно изменен", "");
 
-        public void UpdateUser(UserBLL userBll)
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return new OperationDetails(false, "Проверьте введенные данные", "");
+        //    }
+        //}
+
+        public void EditUser(UserBLL userBll)
         {
             if (userBll == null)
             {
@@ -153,10 +140,10 @@ namespace PhotoAlbum.BLL.Services
             user.Name = userBll.Name;
             user.Bithday = userBll.Bithday;
             user.ApplicationUser.Email = userBll.Email;
-            user.ApplicationUser.UserName = userBll.UserName;
+            user.ApplicationUser.UserName = userBll.Email;
             //_db.UserManager.ChangePasswordAsync(userBll.Id,)
             //    user.Password = userBll.ApplicationUser.PasswordHash;
-            
+
             //    user.Role = _db.RoleManager.FindById(userBll.ApplicationUser.Roles.First(p2=>p2.UserId==userBll.Id).RoleId).Name;
 
             _db.ClientManager.Update(user);
@@ -164,15 +151,64 @@ namespace PhotoAlbum.BLL.Services
 
             _db.SaveAsync();
         }
-
-        public void RemoveUser(UserBLL userBll)
+        public UserBLL GetUserByEmail(string email)
         {
+            UserBLL userDto = null;
+
+            var user = _db.UserManager
+                                  .Users
+                                  .Where(u => u.Email == email)
+                                  .FirstOrDefault();
+
+            if (user != null)
+                userDto = new UserBLL { Email = user.Email };
+
+            return userDto;
+        }
+        public UserBLL GetUserById(string id)
+        {
+            UserBLL userDto = null;
+
+            var user = _db.UserManager
+                                  .Users
+                                  .Where(u => u.Id == id)
+                                  .FirstOrDefault();
+
+            if (user != null)
+            {
+                userDto = new UserBLL
+                {
+                    Name = user.ClientProfile.Name,
+                    Bithday = user.ClientProfile.Bithday,
+                    Email = user.Email,
+                };
+            }
+
+            return userDto;
+        }
+
+        public async Task<OperationDetails> RemoveUser(UserBLL userBll)
+        {
+            ApplicationUser user = _db.UserManager.Users.FirstOrDefault(u => u.Email == userBll.Email);
+
             if (userBll == null)
             {
-                throw new ArgumentNullException("Object cannot be null");
+                return new OperationDetails(succedeed: false,
+                        message: "User not found", prop: "");
             }
-            var product = _db.ClientManager.Find(p => p.Id == userBll.Id).Single();
-            _db.ClientManager.Remove(product);
+            var result = await _db.UserManager.DeleteAsync(user);
+            if (result.Succeeded)
+            {
+                await _db.SaveAsync();
+                return new OperationDetails(succedeed: true,
+                    message: "The user has been successfully deleted", prop: "");
+            }
+            else
+            {
+                return new OperationDetails(succedeed: false,
+                    message: result.Errors.FirstOrDefault(), prop: "");
+            }
         }
+
     }
 }

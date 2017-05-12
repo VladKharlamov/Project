@@ -103,7 +103,7 @@ namespace PhotoAlbum.WEB.Controllers
         {
             try
             {
-                UserService.UpdateUser(new UserBLL()
+                UserService.EditUser(new UserBLL()
                 {
 
                     Id = user.Id,
@@ -141,27 +141,15 @@ namespace PhotoAlbum.WEB.Controllers
         [HttpPost]
         public ActionResult Delete(UserModel user)
         {
-            try
-            {
-                UserService.RemoveUser(new UserBLL()
-                {
+            if (user == null)
+                return HttpNotFound();
+            var userbll = UserService.GetUserByEmail(user.Email);
 
-                    Id = user.Id,
-                    Name = user.Name,
-                    Bithday = user.Bithday,
-                    Email = user.Email,
-                    UserName = user.UserName,
-                    Role = user.Role,
-                    Password = user.Password
-                });
+            UserService.RemoveUser(userbll);
 
-                return RedirectToAction("UserManagement");
-            }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction("UserManagement");
         }
+
 
 
         [HttpPost]
@@ -178,23 +166,23 @@ namespace PhotoAlbum.WEB.Controllers
                 //{
 
 
-                    UserBLL userBll = new UserBLL { UserName = model.UserName, Password = model.Password };
-                    ClaimsIdentity claim = await UserService.Authenticate(userBll);
-                    if (claim == null)
+                UserBLL userBll = new UserBLL { Email = model.Email, Password = model.Password };
+                ClaimsIdentity claim = await UserService.Authenticate(userBll);
+                if (claim == null)
+                {
+                    ModelState.AddModelError("", "Invalid login or password");
+                }
+                else
+                {
+                    AuthenticationManager.SignOut();
+                    AuthenticationManager.SignIn(new AuthenticationProperties
                     {
-                        ModelState.AddModelError("", "Неверный логин или пароль.");
-                    }
-                    else
-                    {
-                        AuthenticationManager.SignOut();
-                        AuthenticationManager.SignIn(new AuthenticationProperties
-                        {
-                            IsPersistent = true
-                        }, claim);
-                        return RedirectToAction("Index", "Home");
-                    }
+                        IsPersistent = true
+                    }, claim);
+                    return RedirectToAction("Index", "Home");
+                }
                 //}
-               // ModelState.AddModelError(operationDetails.Property, operationDetails.Message);
+                // ModelState.AddModelError(operationDetails.Property, operationDetails.Message);
 
             }
             return View(model);
@@ -222,7 +210,6 @@ namespace PhotoAlbum.WEB.Controllers
             {
                 UserBLL userBll = new UserBLL
                 {
-                    UserName = model.UserName,
                     Email = model.Email,
                     Password = model.Password,
                     Bithday = model.Bithday,
@@ -230,9 +217,6 @@ namespace PhotoAlbum.WEB.Controllers
                     Role = "user"
                 };
                 OperationDetails operationDetails = await UserService.Create(userBll);
-
-
-
 
                 if (operationDetails.Succedeed)
                 {
@@ -246,9 +230,9 @@ namespace PhotoAlbum.WEB.Controllers
                     //    await EmailService.SendEmailAsync(model.Email, "Confirm your account",
                     //        $"Подтвердите регистрацию, перейдя по ссылке: <a href='{callbackUrl}'>link</a>");
 
-                        return View("SuccessRegister");
-                    }
-                    else
+                    return View("SuccessRegister");
+                }
+                else
                     ModelState.AddModelError(operationDetails.Property, operationDetails.Message);
             }
             return View(model);
@@ -292,12 +276,12 @@ namespace PhotoAlbum.WEB.Controllers
         {
             await UserService.SetInitialData(new UserBLL
             {
-                UserName = "UHxoTeII",
+                UserName = "admin",
                 Email = "harlamowlad@gmail.com",
                 Password = "11111111",
-                Name = "Харламов Владислав Михайлович",
+                Name = "Kharlamov Vladyslav",
                 Bithday = DateTime.Parse("10/15/1995").Date,
-                Role = "admin",
+                Role = "admin"
             }, new List<string> { "user", "admin", "moderator" });
         }
     }

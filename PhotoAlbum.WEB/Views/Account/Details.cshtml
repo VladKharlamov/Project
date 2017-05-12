@@ -1,4 +1,4 @@
-﻿@model PhotoAlbum.WEB.Models.UserViewModel
+﻿@model PhotoAlbum.WEB.Models.UserModel
 
 @{
     ViewBag.Title = "Details";
@@ -24,14 +24,6 @@
 
         <dd>
             @Html.DisplayFor(model => model.Password)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.UserName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UserName)
         </dd>
 
         <dt>
