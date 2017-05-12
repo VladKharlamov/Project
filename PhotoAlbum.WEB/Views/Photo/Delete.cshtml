@@ -1,0 +1,31 @@
+﻿@model PhotoAlbum.WEB.Models.UserPhotoModel
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+
+
+<h3>Are you sure you want to delete the photo?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+        </dt>
+
+        <dd>
+            <img src="@Html.DisplayFor(model => model.PhotoAddress)" width="500px" type="image/jpeg" />
+
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Photos")
+        </div>
+    }
+</div>

@@ -1,0 +1,45 @@
+﻿@model PhotoAlbum.WEB.Models.CommentPageViewModel
+
+@{
+    ViewBag.Title = "Comments";
+}
+
+<h2>Comments</h2>
+
+<p>
+    @Html.ActionLink("Create New", "AddComment")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Message
+        </th>
+        <th>
+            PhotoId
+        </th>
+        <th>
+            UserId
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.Comments) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Message)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PhotoId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserId)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Gallery Template</title>
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/style.css">
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+	<div class="container">
+	<div class="row gallery-info">
+		<div class="col-xs-6 text-center">
+			<img src="images/cover.jpg" alt="">
+		</div>
+		<div class="col-xs-6">
+			<b>Gallery Name</b>
+		</div>
+	</div>
+		<div id="rows_images">
+			<div class="row images-list text-center" id="row_to_copy">
+				<div class="col-xs-4 align-self-center">
+					<a class="image-item-wrapper" href="#image">
+						<img src="https://scontent.cdninstagram.com/t51.2885-15/e35/18382555_220897045070759_1776856944204578816_n.jpg" alt="">
+						<div class="image-item-set">
+							<span class="glyphicon glyphicon-heart"></span> 10 <span class="glyphicon glyphicon-comment"></span> 20
+						</div>
+					</a>
+				</div>
+				<div class="col-xs-4  text-center">
+					<a class="image-item-wrapper" href="#image">
+						<img src="https://scontent.cdninstagram.com/t51.2885-15/e35/18382555_220897045070759_1776856944204578816_n.jpg" alt="">
+						<div class="image-item-set">
+							<span class="glyphicon glyphicon-heart"></span> 10 <span class="glyphicon glyphicon-comment"></span> 20
+						</div>
+					</a>
+				</div>
+				<div class="col-xs-4 text-center">
+					<a class="image-item-wrapper" href="#image">
+						<img src="https://scontent.cdninstagram.com/t51.2885-15/e35/18382555_220897045070759_1776856944204578816_n.jpg" alt="">
+						<div class="image-item-set">
+							<span class="glyphicon glyphicon-heart"></span> 10 <span class="glyphicon glyphicon-comment"></span> 20
+						</div>
+					</a>
+				</div>
+			</div>
+			<div class="row images-list text-center">
+				<div class="col-xs-4 align-self-center">
+					<a class="image-item-wrapper" href="#image">
+						<img src="https://scontent.cdninstagram.com/t51.2885-15/e35/18382555_220897045070759_1776856944204578816_n.jpg" alt="">
+						<div class="image-item-set">
+							<span class="glyphicon glyphicon-heart"></span> 10 <span class="glyphicon glyphicon-comment"></span> 20
+						</div>
+					</a>
+				</div>
+				<div class="col-xs-4  text-center">
+					<a class="image-item-wrapper" href="#image">
+						<img src="https://scontent.cdninstagram.com/t51.2885-15/e35/18382555_220897045070759_1776856944204578816_n.jpg" alt="">
+						<div class="image-item-set">
+							<span class="glyphicon glyphicon-heart"></span> 10 <span class="glyphicon glyphicon-comment"></span> 20
+						</div>
+					</a>
+				</div>
+				<div class="col-xs-4 text-center">
+					<a class="image-item-wrapper" href="#image">
+						<img src="https://scontent.cdninstagram.com/t51.2885-15/e35/18382555_220897045070759_1776856944204578816_n.jpg" alt="">
+						<div class="image-item-set">
+							<span class="glyphicon glyphicon-heart"></span> 10 <span class="glyphicon glyphicon-comment"></span> 20
+						</div>
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="row text-center load-more-wrapper">
+			<a href="#" class="btn">Загрузить ещё</a>
+		</div>
+	</div>
+	<script>
+		$('.load-more-wrapper .btn').on('click', function (e) {
+			e.preventDefault();
+			// тут можно организовать загрузку через ajax
+			$('#rows_images').append($('#row_to_copy')[0].outerHTML);
+		})
+	</script>
+</body>
+</html>

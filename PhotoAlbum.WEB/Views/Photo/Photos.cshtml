@@ -1,0 +1,87 @@
+﻿@using PhotoAlbum.WEB.HTMLHelpers
+@model PhotoAlbum.WEB.Models.PhotoPageViewModel
+
+@{
+    ViewBag.Title = "Photos";
+}
+
+<h2>Photos</h2>
+
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                Photo
+            </th>
+
+            <th></th>
+        </tr>
+
+    @foreach (var item in Model.UserPhotos) {
+        <tr>
+            <td>
+                <img src="@item.PhotoAddress" width="400px" type="image/jpeg"/>
+            </td>
+
+            <td>
+                @Html.ActionLink("Likes", "Edit", new { id=item.Id }) |
+                @Html.ActionLink("Comments", "Comments", "Comment", new { id = item.Id }, null) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.Id, photoAddress = item.PhotoAddress })
+                @Html.ActionLink("OnAvatar", "OnAvatar", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+    </table>
+    <div> @Html.PageLinks(Model.PagingInfo, x => Url.Action("Photos", new { page = x })) </div>
+
+@*<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gallery Template</title>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="row gallery-info">
+            <div class="col-xs-6 text-center">
+                <img src="images/cover.jpg" alt="">
+            </div>
+            <div class="col-xs-6">
+                <b>Gallery Name</b>
+            </div>
+        </div>
+        <div id="rows_images">
+            @foreach (var item in Model.UserPhotos)
+            {
+
+                <div class="row images-list text-center" id="row_to_copy">
+                    <div class="col-xs-4 align-self-center">
+                        <a class="image-item-wrapper" href="#image">
+                            <img src="@item.PhotoAddress" alt="">
+                            <div class="image-item-set">
+                                <span class="glyphicon glyphicon-heart"></span> 10 <span class="glyphicon glyphicon-comment"></span> 20
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="row text-center load-more-wrapper">
+            <a href="#" class="btn">Загрузить ещё</a>
+        </div>
+    </div>
+    <script>
+		$('.load-more-wrapper .btn').on('click', function (e) {
+			e.preventDefault();
+			// тут можно организовать загрузку через ajax
+			$('#rows_images').append($('#row_to_copy')[0].outerHTML);
+		})
+    </script>
+</body>
+</html>*@

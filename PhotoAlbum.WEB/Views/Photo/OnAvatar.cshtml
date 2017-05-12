@@ -1,0 +1,21 @@
+﻿@model PhotoAlbum.WEB.Models.UserPhotoModel
+
+@{
+    ViewBag.Title = "OnAvatar";
+}
+
+
+<h3>Are you sure?</h3>
+<div>
+    <hr />
+    
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Ok" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Photos")
+        </div>
+    }
+</div>
