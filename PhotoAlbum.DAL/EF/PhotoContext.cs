@@ -13,7 +13,7 @@
 //        public DbSet<ClientPhoto> ClientPhotos { get; set; }
 //        public DbSet<Comment> Comments { get; set; }
 //        public DbSet<Like> Likes { get; set; }
-//        public DbSet<Subcribe> Subcribers { get; set; }
+//        public DbSet<Subscribe> Subcribers { get; set; }
 //        public DbSet<ClientAvatar> Avatars { get; set; }
 
 //        public PhotoContext(string connectionString)

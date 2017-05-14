@@ -14,7 +14,7 @@ namespace PhotoAlbum.WEB.Controllers
                 return HttpContext.GetOwinContext().GetUserManager<IUserService>();
             }
         }
-
+        [AllowAnonymous]
         public ActionResult Index()
         {
             ViewBag.Photo = "/Content/MainPhoto.jpg";
@@ -22,13 +22,15 @@ namespace PhotoAlbum.WEB.Controllers
 
             return View();
         }
-        [Authorize(Roles="admin")]
+
+        [AllowAnonymous]
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
             
             return View();
         }
+        [AllowAnonymous]
         public ActionResult Contact()
         {
             ViewBag.Message = "Your application contact page.";

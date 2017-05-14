@@ -91,47 +91,47 @@ namespace PhotoAlbum.BLL.Services
             _db.Comments.Remove(comment);
         }
 
-        public void AddSubcriber(SubcribeBLL subcribeBLL)
+        public void AddSubcriber(SubscribeBLL subscribeBll)
         {
-            if (subcribeBLL == null)
+            if (subscribeBll == null)
             {
                 throw new ArgumentNullException("Object cannot be null");
             }
 
-            _db.Subcribers.Add(new Subcribe()
+            _db.Subcribers.Add(new Subscribe()
             {
                 Id = Guid.NewGuid().ToString(),
-                Subcriber = _db.ClientManager.Find(p => p.Id == subcribeBLL.SubcriberId).Single(),
-                User = _db.ClientManager.Find(p => p.Id == subcribeBLL.UserId).Single()
+                Subcriber = _db.ClientManager.Find(p => p.Id == subscribeBll.SubcriberId).Single(),
+                User = _db.ClientManager.Find(p => p.Id == subscribeBll.UserId).Single()
             });
 
             _db.SaveAsync();
         }
 
-        public SubcribeBLL GetSubcriber(string id)
+        public SubscribeBLL GetSubcriber(string id)
         {
-            return _mapper.Map<Subcribe, SubcribeBLL>(_db.Subcribers.Get(id));
+            return _mapper.Map<Subscribe, SubscribeBLL>(_db.Subcribers.Get(id));
         }
 
-        public IEnumerable<SubcribeBLL> GetSubcribersByUser(string userId)
+        public IEnumerable<SubscribeBLL> GetSubcribersByUser(string userId)
         {
             var subcribers = _db.Subcribers.Find(p => p.Subcriber.Id == userId);
-            return _mapper.Map<IEnumerable<Subcribe>, IEnumerable<SubcribeBLL>>(subcribers);
+            return _mapper.Map<IEnumerable<Subscribe>, IEnumerable<SubscribeBLL>>(subcribers);
         }
 
-        public IEnumerable<SubcribeBLL> GetUsersBySubcriber(string subcriberId)
+        public IEnumerable<SubscribeBLL> GetUsersBySubcriber(string subcriberId)
         {
             var subcribers = _db.Subcribers.Find(p => p.User.Id == subcriberId);
-            return _mapper.Map<IEnumerable<Subcribe>, IEnumerable<SubcribeBLL>>(subcribers);
+            return _mapper.Map<IEnumerable<Subscribe>, IEnumerable<SubscribeBLL>>(subcribers);
         }
 
-        public void RemoveSubcribe(SubcribeBLL subcribeBLL)
+        public void RemoveSubcribe(SubscribeBLL subscribeBll)
         {
-            if (subcribeBLL == null)
+            if (subscribeBll == null)
             {
                 throw new ArgumentNullException("Object cannot be null");
             }
-            var subcribe = _db.Subcribers.Find(p => p.Id == subcribeBLL.Id).Single();
+            var subcribe = _db.Subcribers.Find(p => p.Id == subscribeBll.Id).Single();
             _db.Subcribers.Remove(subcribe);
         }
     }

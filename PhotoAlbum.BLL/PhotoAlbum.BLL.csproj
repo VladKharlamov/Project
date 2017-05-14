@@ -96,7 +96,7 @@
   <ItemGroup>
     <Compile Include="EntityBLL\CommentBLL.cs" />
     <Compile Include="EntityBLL\LikeBLL.cs" />
-    <Compile Include="EntityBLL\SubcribeBLL.cs" />
+    <Compile Include="EntityBLL\SubscribeBLL.cs" />
     <Compile Include="EntityBLL\UserBLL.cs" />
     <Compile Include="EntityBLL\UserPhotoBLL.cs" />
     <Compile Include="Infrastructure\MappingIdentityProfile.cs" />

@@ -6,6 +6,7 @@
     <title>@ViewBag.Title - My ASP.NET Photoalbum</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("styles", required: false)
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -24,6 +25,9 @@
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>
+                <form action="url_сюда" class="navbar-form navbar-left" method="post">
+                    <input type="text" class="form-control" placeholder="Search..." name="searchQuery">
+                </form>
 
                 <ul class="nav navbar-nav navbar-right">
                     @if (User.Identity.IsAuthenticated)

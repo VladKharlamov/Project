@@ -46,7 +46,7 @@ namespace PhotoAlbum.WEB.Controllers
                 return HttpContext.GetOwinContext().Authentication;
             }
         }
-
+        [AllowAnonymous]
         public ActionResult Login()
         {
             return View();
@@ -151,7 +151,7 @@ namespace PhotoAlbum.WEB.Controllers
         }
 
 
-
+        [AllowAnonymous]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginModel model, string returnUrl = null)
@@ -193,12 +193,11 @@ namespace PhotoAlbum.WEB.Controllers
             AuthenticationManager.SignOut();
             return RedirectToAction("Index", "Home");
         }
-
+        [AllowAnonymous]
         public ActionResult Register()
         {
             return View();
         }
-
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]

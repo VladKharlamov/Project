@@ -1,6 +1,6 @@
 ﻿namespace PhotoAlbum.BLL.EnittyBLL
 {
-    public class SubcribeBLL
+    public class SubscribeBLL
     {
         public string Id { get; set; }
 

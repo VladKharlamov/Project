@@ -1,0 +1,42 @@
+﻿@model PhotoAlbum.WEB.Models.UserPhotoModel
+
+@{
+    ViewBag.Title = "ViewPhoto";
+}
+
+@section styles {
+    @Styles.Render("~/Content/Css/Style.css")
+}
+
+<h2>ViewPhoto</h2>
+<div class="view-photo-wrapper">
+    <div class="view-photo-image">
+        <img src="@Html.DisplayFor(model => model.PhotoAddress)" />
+    </div>
+    <div class="view-photo-info">
+        <div class="view-photo-about">
+            About photo
+        </div>
+        <div class="view-photo-comments">
+            <div class="view-photo-comment">Hello, good photo, fuck you!</div>
+            <div class="view-photo-comment">Hello, good photo, fuck you!</div>
+            <div class="view-photo-comment">Hello, good photo, fuck you!</div>
+            <div class="view-photo-comment">Hello, good photo, fuck you!</div>
+            <div class="view-photo-comment">Hello, good photo, fuck you!</div>
+            <div class="view-photo-comment">Hello, good photo, fuck you!</div>
+            <div class="view-photo-comment">Hello, good photo, fuck you!</div>
+            <div class="view-photo-comment">Hello, good photo, fuck you!</div>
+            <div class="view-photo-comment">Hello, good photo, fuck you!</div>
+            <div class="view-photo-comment">Hello, good photo, fuck you!</div>
+            <div class="view-photo-comment">Hello, good photo, fuck you!</div>
+            <div class="view-photo-comment">Hello, good photo, fuck you!</div>
+            <div class="view-photo-comment">Hello, good photo, fuck you!</div>
+        </div>
+    </div>
+</div>
+<div class="clearfix"></div>
+
+
+<p>
+    @Html.ActionLink("Back to List", "Photos", "Photo", new { Id = Model.UserId}, null)
+</p>

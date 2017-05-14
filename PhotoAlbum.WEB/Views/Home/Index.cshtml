@@ -33,7 +33,7 @@
     {
         <div class="row">
             <div class="col-md-6 text-center">
-                <div class="btn btn-lg btn-default" style="width: 90%; padding: 20px; margin: 7px">@Html.ActionLink("Sign in", "Login", "Account")</div>
+                <div class="btn btn-lg btn-default"  style="width: 90%; padding: 20px; margin: 7px">@Html.ActionLink("Sign in", "Login", "Account")</div>
             </div>
             <div class="col-md-6 text-center">
                 <div class="btn btn-lg btn-default" style="width: 90%; padding: 20px; margin: 7px">@Html.ActionLink("Sign up", "Register", "Account")</div>
@@ -48,7 +48,7 @@
 
         <div class="row">
             <div class="col-md-12 text-center">
-                <div class="btn btn-lg btn-default" style="width: 97%; padding: 20px; margin: 7px">@Html.ActionLink("My photo", "Photos", "Photo")</div>
+                <a class="btn btn-lg btn-default" style="width: 97%; padding: 20px; margin: 7px" href="@Url.Action("Photos", "Photo")">My photo</a>
             </div>
         </div>
 

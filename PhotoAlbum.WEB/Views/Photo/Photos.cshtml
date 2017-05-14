@@ -5,29 +5,29 @@
     ViewBag.Title = "Photos";
 }
 
+@section styles {
+    @Styles.Render("~/Content/Css/Style.css")
+}
 <br/>
 <br/>
 <div class="text-center">
     <span style="font-size: 14pt"> @User.Identity.Name </span>
-    <p class="btn btn-lg btn-default" style=" margin:auto; width: 150px; padding: 10px; background: red; color: white">
-        @Html.ActionLink("Follow", "Create") 999
-    </p>
-    <p class="btn btn-lg btn-default" style=" margin:auto; padding: 10px; width: 150px;">
-        @Html.ActionLink("Followed", "Create") 1000
-    </p>
+    <a href="@Url.Action("Create")" class="btn btn-lg btn-follow">Follow  999</a>
+    <a href="@Url.Action("Create")" class="btn btn-lg btn-default">Followed  1000</a>
 </div>
 <br />
 <br />
-<div class="row text-center">
+<div class="row text-center images-list">
 
     @foreach (var item in Model.UserPhotos)
     {
-        <div class="col-md-4">
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 image-item">
+            <a class="image-item-wrapper view-photo" href="@Url.Action("ViewPhoto", "Photo", new { Id = item.Id })">
 
-            <img src="@item.PhotoAddress" width="390px" class="img-thumbnail" />
-
-            
-                <span class="glyphicon glyphicon-heart"></span> 10 <span class="glyphicon glyphicon-comment"></span> 20
+                <img src="@item.PhotoAddress" width="390px"/>
+                <div class="image-item-set"><span class="glyphicon glyphicon-heart"></span>&nbsp; 10 &nbsp; <span class="glyphicon glyphicon-comment"></span> &nbsp; 20
+                </div>
+            </a>
             @*@Html.ActionLink("Likes", "Edit", new { id = item.Id }) |
             @Html.ActionLink("Comments", "Comments", "Comment", new { id = item.Id }, null) |
             @Html.ActionLink("Delete", "Delete", new { id = item.Id, photoAddress = item.PhotoAddress }) |

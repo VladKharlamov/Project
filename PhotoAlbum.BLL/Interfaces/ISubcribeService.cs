@@ -5,10 +5,10 @@ namespace PhotoAlbum.BLL.Interfaces
 {
     public interface ISubcribeService
     {
-        void AddSubcriber(SubcribeBLL subcribeBLL);
-        SubcribeBLL GetSubcriber(string id);
-        IEnumerable<SubcribeBLL> GetSubcribersByUser(string userId);
-        IEnumerable<SubcribeBLL> GetUsersBySubcriber(string subcriberId);
-        void RemoveSubcribe(SubcribeBLL commentBll);
+        void AddSubcriber(SubscribeBLL subscribeBll);
+        SubscribeBLL GetSubcriber(string id);
+        IEnumerable<SubscribeBLL> GetSubcribersByUser(string userId);
+        IEnumerable<SubscribeBLL> GetUsersBySubcriber(string subcriberId);
+        void RemoveSubcribe(SubscribeBLL commentBll);
     }
 }

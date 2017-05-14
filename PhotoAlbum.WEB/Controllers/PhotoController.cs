@@ -14,7 +14,6 @@ using PhotoAlbum.WEB.Utils;
 
 namespace PhotoAlbum.WEB.Controllers
 {
-    [Authorize]
     public class PhotoController : Controller
     {
         private int PageSize = 9;
@@ -152,6 +151,22 @@ namespace PhotoAlbum.WEB.Controllers
             {
                 return View();
             }
+
+        }
+        public ActionResult ViewPhoto(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var photo = PhotoService.GetPhoto(id);
+            if (photo == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(_mapper.Map<UserPhotoBLL, UserPhotoModel>(photo));
         }
     }
+
 }

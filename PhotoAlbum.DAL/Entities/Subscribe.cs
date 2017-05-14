@@ -2,7 +2,7 @@
 
 namespace PhotoAlbum.DAL.Entities
 {
-    public class Subcribe
+    public class Subscribe
     {
         [Key]
         public string Id { get; set; }
