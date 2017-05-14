@@ -11,7 +11,7 @@ namespace PhotoAlbum.WEB.Models
             public string UserName { get; set; }
             public string Name { get; set; }
         [DataType(DataType.DateTime)]
-            public DateTime Bithday { get; set; }
+            public DateTime Birthday { get; set; }
             public string Role { get; set; }
             public string Avatar { get; set; }
     }

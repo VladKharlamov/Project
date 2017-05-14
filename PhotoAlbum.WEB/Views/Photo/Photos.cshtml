@@ -7,6 +7,17 @@
 
 <br/>
 <br/>
+<div class="text-center">
+    <span style="font-size: 14pt"> @User.Identity.Name </span>
+    <p class="btn btn-lg btn-default" style=" margin:auto; width: 150px; padding: 10px; background: red; color: white">
+        @Html.ActionLink("Follow", "Create") 999
+    </p>
+    <p class="btn btn-lg btn-default" style=" margin:auto; padding: 10px; width: 150px;">
+        @Html.ActionLink("Followed", "Create") 1000
+    </p>
+</div>
+<br />
+<br />
 <div class="row text-center">
 
     @foreach (var item in Model.UserPhotos)
@@ -15,11 +26,12 @@
 
             <img src="@item.PhotoAddress" width="390px" class="img-thumbnail" />
 
-
-            @Html.ActionLink("Likes", "Edit", new { id = item.Id }) |
+            
+                <span class="glyphicon glyphicon-heart"></span> 10 <span class="glyphicon glyphicon-comment"></span> 20
+            @*@Html.ActionLink("Likes", "Edit", new { id = item.Id }) |
             @Html.ActionLink("Comments", "Comments", "Comment", new { id = item.Id }, null) |
             @Html.ActionLink("Delete", "Delete", new { id = item.Id, photoAddress = item.PhotoAddress }) |
-            @Html.ActionLink("OnAvatar", "OnAvatar", new { id = item.Id })
+            @Html.ActionLink("OnAvatar", "OnAvatar", new { id = item.Id })*@
         </div>
     }
 </div><br />
@@ -30,8 +42,8 @@
     <div> @Html.PageLinks(Model.PagingInfo, x => Url.Action("Photos", new { page = x })) </div>
     <br/><br />
 
-    <p>
-        @Html.ActionLink("Create New", "Create")
+    <p class="btn btn-lg btn-default" style="width: 300px; margin:auto; padding: 20px">
+        @Html.ActionLink("Add new photo", "Create")
     </p>
-
+    <br /><br />
 </div>

@@ -9,7 +9,7 @@ namespace PhotoAlbum.BLL.EnittyBLL
         public string Password { get; set; }
         public string UserName { get; set; }
         public string Name { get; set; }
-        public DateTime Bithday { get; set; }
+        public DateTime Birthday { get; set; }
         public string Role { get; set; }
         public string Avatar { get; set; }
     }

@@ -5,30 +5,56 @@
 <div class="jumbotron text-center">
     <h1>Hello, dear user!</h1>
     <p>Our service will allow you to easily share photos with your friends. Live brightly!</p>
+    <br />
+
+    <div class="text-center col-md-12">
+        <img src="@ViewBag.Photo" width="100%" class="img-rounded" type="image/jpeg" />
+    </div>
+    <br />
+
+
+
+    <br />
+
+    <div class="text-center col-md-12 lead">
+        <br />
+        <p>
+            <b> Enjoing your life!</b>
+        </p>
+        <br />
+        <img src="@ViewBag.Photo2" width="100%" class="img-rounded" type="image/jpeg" />
+        <p>
+            <br /><b>Remember every moment in your life!</b><br />
+
+        </p>
+
+    </div>
+    @if (!User.Identity.IsAuthenticated)
+    {
+        <div class="row">
+            <div class="col-md-6 text-center">
+                <div class="btn btn-lg btn-default" style="width: 90%; padding: 20px; margin: 7px">@Html.ActionLink("Sign in", "Login", "Account")</div>
+            </div>
+            <div class="col-md-6 text-center">
+                <div class="btn btn-lg btn-default" style="width: 90%; padding: 20px; margin: 7px">@Html.ActionLink("Sign up", "Register", "Account")</div>
+            </div>
+
+        </div>
+
+
+    }
+    else
+    {
+
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <div class="btn btn-lg btn-default" style="width: 97%; padding: 20px; margin: 7px">@Html.ActionLink("My photo", "Photos", "Photo")</div>
+            </div>
+        </div>
+
+
+    }
 </div>
 
-@if (!User.Identity.IsAuthenticated)
-{
-    <div class="row">
-        <div class="col-md-6 text-center">
-            <div class="btn btn-lg">@Html.ActionLink("Sign in", "Login", "Account")</div>
-        </div>
-        <div class="col-md-6 text-center">
-            <div class="btn btn-lg">@Html.ActionLink("Sign up", "Register", "Account")</div>
-        </div>
-    </div>
-
-
-}
-else
-{
-
-    <div class="row">
-        <div class="col-md-12 text-center">
-            <div class="btn btn-lg">@Html.ActionLink("My photo", "Photos", "Photo")</div>
-        </div>
-    </div>
-
-}
 
 

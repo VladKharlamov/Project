@@ -108,7 +108,7 @@ namespace PhotoAlbum.WEB.Controllers
 
                     Id = user.Id,
                     Name = user.Name,
-                    Bithday = user.Bithday,
+                    Birthday = user.Birthday,
                     Email = user.Email,
                     UserName = user.UserName,
                     Role = user.Role,
@@ -212,7 +212,7 @@ namespace PhotoAlbum.WEB.Controllers
                 {
                     Email = model.Email,
                     Password = model.Password,
-                    Bithday = model.Bithday,
+                    Birthday = model.Bithday,
                     Name = model.Name,
                     Role = "user"
                 };
@@ -280,7 +280,7 @@ namespace PhotoAlbum.WEB.Controllers
                 Email = "harlamowlad@gmail.com",
                 Password = "11111111",
                 Name = "Kharlamov Vladyslav",
-                Bithday = DateTime.Parse("10/15/1995").Date,
+                Birthday = DateTime.Parse("10/15/1995").Date,
                 Role = "admin"
             }, new List<string> { "user", "admin", "moderator" });
         }

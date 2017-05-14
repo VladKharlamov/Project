@@ -17,6 +17,9 @@ namespace PhotoAlbum.WEB.Controllers
 
         public ActionResult Index()
         {
+            ViewBag.Photo = "/Content/MainPhoto.jpg";
+            ViewBag.Photo2 = "/Content/MainPhoto2.jpg";
+
             return View();
         }
         [Authorize(Roles="admin")]

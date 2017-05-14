@@ -40,7 +40,7 @@ namespace PhotoAlbum.BLL.Services
                 ClientProfile clientProfile = new ClientProfile
                 {
                     Id = user.Id,
-                    Bithday = userBll.Bithday,
+                    Birthday = userBll.Birthday,
                     Name = userBll.Name
                 };
                 _db.ClientManager.Create(clientProfile);
@@ -138,7 +138,7 @@ namespace PhotoAlbum.BLL.Services
             var user = _db.ClientManager.Find(p => p.Id == userBll.Id).Single();
             user.Id = userBll.Id;
             user.Name = userBll.Name;
-            user.Bithday = userBll.Bithday;
+            user.Birthday = userBll.Birthday;
             user.ApplicationUser.Email = userBll.Email;
             user.ApplicationUser.UserName = userBll.Email;
             //_db.UserManager.ChangePasswordAsync(userBll.Id,)
@@ -179,7 +179,7 @@ namespace PhotoAlbum.BLL.Services
                 userDto = new UserBLL
                 {
                     Name = user.ClientProfile.Name,
-                    Bithday = user.ClientProfile.Bithday,
+                    Birthday = user.ClientProfile.Birthday,
                     Email = user.Email,
                 };
             }

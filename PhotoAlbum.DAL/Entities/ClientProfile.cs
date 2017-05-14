@@ -13,7 +13,7 @@ namespace PhotoAlbum.DAL.Entities
 
         public string Name { get; set; }
 
-        public DateTime Bithday { get; set; }
+        public DateTime Birthday { get; set; }
 
         public ICollection<Subcribe> Subcribes { get; set; }
         public ICollection<Like> Likes { get; set; }
