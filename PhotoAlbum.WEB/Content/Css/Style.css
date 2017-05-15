@@ -46,6 +46,10 @@
    transform: scale(2);
 }
 
+.image-item-set .glyphicon-heart {
+    margin-right: 2px;
+}
+
 .image-item-wrapper:hover .image-item-set {
     transform: scale(1);
     opacity: 1;
@@ -74,6 +78,14 @@
     background: red;
 }
 
+.btn-transparent {
+    background-color: transparent;
+    border: none;
+}
+
+.red-font {
+    color: #ff4949;
+}
 .table > tbody > tr > td {
     vertical-align: middle;
 }

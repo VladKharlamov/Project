@@ -21,28 +21,20 @@ namespace PhotoAlbum.BLL.Services
             _mapper = new MappingPhotoProfile(uow).Config.CreateMapper();
         }
 
-        public bool Like(LikeBLL userLikeBll)
+        public bool Like(LikeBLL likeBll)
         {
-            if (userLikeBll == null)
+            if (likeBll == null)
             {
                 throw new ArgumentNullException("Object cannot be null");
             }
-            if (string.IsNullOrEmpty(GetLikeByUserToPhoto(userLikeBll.UserId, userLikeBll.PhotoId).Id))
+            if (string.IsNullOrEmpty(GetLikeByUserToPhoto(likeBll.UserId, likeBll.PhotoId).Id))
             {
-                _db.Likes.Add(new Like()
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    Photo = _db.Photos.Find(p => p.Id == userLikeBll.PhotoId).Single(),
-                    User = _db.ClientManager.Find(p => p.Id == userLikeBll.UserId).Single()
-                });
-                _db.SaveAsync();
+                AddLike(likeBll);
                 return true;
             }
             else
             {
-                var like = _db.Likes.Find(p => p.Id == userLikeBll.Id).Single();
-                _db.Likes.Remove(like);
-                _db.SaveAsync();
+                RemoveLike(likeBll);
                 return false;
             }
         }
@@ -63,6 +55,37 @@ namespace PhotoAlbum.BLL.Services
         {
             var likes = _db.Likes.Find(p => p.Photo.Id == photoId);
             return _mapper.Map<IEnumerable<Like>, IEnumerable<LikeBLL>>(likes);
+        }
+        public int GetCountLikesByPhoto(string photoId)
+        {
+            var likes = _db.Likes.Find(p => p.Photo.Id == photoId);
+            return likes.Count();
+        }
+
+        public void AddLike(LikeBLL likeBll)
+        {
+            if (likeBll == null)
+            {
+                throw new ArgumentNullException("Object cannot be null");
+            }
+            _db.Likes.Add(new Like()
+            {
+                Id = Guid.NewGuid().ToString(),
+                Photo = _db.Photos.Find(p => p.Id == likeBll.PhotoId).Single(),
+                User = _db.ClientManager.Find(p => p.Id == likeBll.UserId).Single()
+            });
+            _db.Save();
+        }
+
+        public void RemoveLike(LikeBLL likeBll)
+        {
+            if (likeBll == null)
+            {
+                throw new ArgumentNullException("Object cannot be null");
+            }
+            var like = _db.Likes.Find(p => p.Id == likeBll.Id).SingleOrDefault();
+            _db.Likes.Remove(like);
+            _db.Save();
         }
     }
 }

@@ -13,5 +13,6 @@ namespace PhotoAlbum.DAL.Interfaces
         IRepository<Like> Categories { get; }
         IRepository<Subscribe> Subcribers { get; }
         Task SaveAsync();
+        void Save();
     }
 }

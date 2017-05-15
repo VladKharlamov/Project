@@ -7,7 +7,5 @@
         public string PhotoId { get; set; }
 
         public string UserId { get; set; }
-
-        public int Count { get; }
     }
 }

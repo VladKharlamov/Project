@@ -1,0 +1,29 @@
+﻿@model PhotoAlbum.BLL.EnittyBLL.LikeBLL
+<div id="savingresult">
+    @if (@ViewBag.liked)
+         {
+        <span class="glyphicon glyphicon-heart"></span>
+         }
+         else
+         {
+             <span style="font-size: 30px" class="glyphicon glyphicon-heart"></span>
+         }
+</div>
+
+
+@*@using (Html.BeginForm()) {*@
+@using (Ajax.BeginForm("LikeSave", "Like", new AjaxOptions
+{
+    InsertionMode = InsertionMode.Replace,
+    UpdateTargetId = "savingresult",
+    LoadingElementId = "loader"
+}))
+{
+    @Html.HiddenFor(em=>em.PhotoId)
+    @Html.HiddenFor(m => m.UserId)
+
+    <input type="submit" value="Save" class="btn btn-default" />
+}
+<div id="loader" class=" aletr" style="display:none">
+    Loading...<img src="~/Content/Default/ajax-loader.gif" />
+</div>

@@ -1,4 +1,6 @@
-﻿@using PhotoAlbum.WEB.HTMLHelpers
+﻿@using Microsoft.AspNet.Identity
+@using PhotoAlbum.BLL.EnittyBLL
+@using PhotoAlbum.WEB.HTMLHelpers
 @model PhotoAlbum.WEB.Models.PhotoPageViewModel
 
 @{
@@ -25,7 +27,51 @@
             <a class="image-item-wrapper view-photo" href="@Url.Action("ViewPhoto", "Photo", new { Id = item.Id })">
 
                 <img src="@item.PhotoAddress" width="390px"/>
-                <div class="image-item-set"><span class="glyphicon glyphicon-heart"></span>&nbsp; 10 &nbsp; <span class="glyphicon glyphicon-comment"></span> &nbsp; 20
+               <div class="image-item-set">@*<span class="glyphicon glyphicon-heart"> @Html.Action("Like", "Like",
+    new LikeBLL() { PhotoId = item.Id, UserId = User.Identity.GetUserId() })*@
+                    
+                    @*@if (@ViewBag.liked)
+                    {*@
+                    @*}
+    else
+    {
+        <span style="font-size: 30px" class="glyphicon glyphicon-heart"></span>
+    }*@
+
+
+                @*@using (Html.BeginForm()) {*@
+                @using (Ajax.BeginForm("LikeSave", "Like", new AjaxOptions
+                {
+                    InsertionMode = InsertionMode.Replace,
+                    UpdateTargetId = "savingresult_" + item.GetHashCode(),
+                    LoadingElementId = "loader"
+                }))
+                {
+                    <input type="hidden" id="PhotoId" name="PhotoId" value="@item.Id" />
+                    <input type="hidden" id="UserId" name="UserId" value="@User.Identity.GetUserId()" />
+                    <button class="btn-transparent">
+
+                        <div id="savingresult_@item.GetHashCode()">
+                            @*@if (@ViewBag.liked)
+            {*@
+                            @Html.Action("LikeCount", "Like", new LikeBLL() { PhotoId = item.Id, UserId = User.Identity.GetUserId() })
+                            @*}
+            else
+            {
+                <span style="font-size: 30px" class="glyphicon glyphicon-heart"></span>
+            }*@
+                        </div>
+                    </button>
+                }
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+    @*</span>*@@*&nbsp; @Html.Action("LikeCount","Like",
+    new LikeBLL() { PhotoId = item.Id, UserId = item.UserId})*@ &nbsp; <span class="glyphicon glyphicon-comment"></span> &nbsp; 20
                 </div>
             </a>
             @*@Html.ActionLink("Likes", "Edit", new { id = item.Id }) |

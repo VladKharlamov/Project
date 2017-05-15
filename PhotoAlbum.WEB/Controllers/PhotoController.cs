@@ -167,6 +167,22 @@ namespace PhotoAlbum.WEB.Controllers
 
             return View(_mapper.Map<UserPhotoBLL, UserPhotoModel>(photo));
         }
+
+        private ILikeService _likeService;
+        // GET: Like
+        public ActionResult Likes(string photoid)
+        {
+            IEnumerable<LikeBLL> likeByPhoto = _likeService.GetLikesByPhoto(photoid);
+            var model = likeByPhoto.Select(_mapper.Map<LikeBLL, LikeModel>);
+            return View(model);
+        }
+
+        // GET: Like/Details/5
+        public ActionResult Details(int id)
+        {
+            return View();
+        }
+
     }
 
 }

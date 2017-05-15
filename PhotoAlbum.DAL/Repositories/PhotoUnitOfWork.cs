@@ -57,6 +57,10 @@ namespace PhotoAlbum.DAL.Repositories
         {
             await _db.SaveChangesAsync();
         }
+        public void Save()
+        {
+            _db.SaveChanges();
+        }
         #endregion
 
 
