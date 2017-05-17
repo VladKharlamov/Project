@@ -36,10 +36,11 @@ namespace PhotoAlbum.BLL.Services
                 Id = Guid.NewGuid().ToString(),
                 Message = commentBll.Message,
                 Photo = _db.Photos.Find(p => p.Id == commentBll.PhotoId).Single(),
-                User = _db.ClientManager.Find(p => p.Id == commentBll.UserId).Single()
+                User = _db.ClientManager.Find(p => p.Id == commentBll.UserId).Single(),
+                Date = DateTime.Now
             });
 
-            _db.SaveAsync();
+            _db.Save();
         }
 
         public CommentBLL GetComment(string id)
@@ -49,13 +50,13 @@ namespace PhotoAlbum.BLL.Services
 
         public IEnumerable<CommentBLL> GetCommentsByPhoto(string photoId)
         {
-            var comments = _db.Comments.Find(p => p.Photo.Id == photoId);
+            var comments = _db.Comments.Find(p => p.Photo.Id == photoId).OrderBy(x=>x.Date);
             return _mapper.Map<IEnumerable<Comment>, IEnumerable<CommentBLL>>(comments);
         }
 
         public IEnumerable<CommentBLL> GetCommentsByUser(string userId)
         {
-            var comments = _db.Comments.Find(p => p.User.Id == userId);
+            var comments = _db.Comments.Find(p => p.User.Id == userId).OrderBy(x => x.Date);
             return _mapper.Map<IEnumerable<Comment>, IEnumerable<CommentBLL>>(comments);
         }
 

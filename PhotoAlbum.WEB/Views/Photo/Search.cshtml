@@ -1,0 +1,53 @@
+﻿@using Microsoft.AspNet.Identity
+@using PhotoAlbum.BLL.EnittyBLL
+@using PhotoAlbum.WEB.HTMLHelpers
+@model PhotoAlbum.WEB.Models.PhotoPageViewModel
+
+@{
+    ViewBag.Title = "Search";
+}
+
+@section styles {
+    @Styles.Render("~/Content/Css/Style.css")
+}
+
+<br />
+<br />
+<div class="row text-center images-list">
+
+    @foreach (var item in Model.UserPhotos)
+    {
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 image-item">
+            <div class="image-item-wrapper view-photo" href="@Url.Action("ViewPhoto", "Photo", new { Id = item.Id })">
+
+                <img src="@item.PhotoAddress" />
+                <div class="image-item-set">
+                    @using (Ajax.BeginForm("LikeSave", "Like", new { PhotoId = item.Id, UserId = User.Identity.GetUserId() }, new AjaxOptions
+                    {
+                        InsertionMode = InsertionMode.Replace,
+                        UpdateTargetId = "savingresult_" + item.GetHashCode()
+                    }))
+                    {
+                        <button class="btn-transparent" onclick="event.stopPropagation();" id="savingresult_@item.GetHashCode()">@Html.Action("LikeCount", "Like", new LikeBLL() { PhotoId = item.Id, UserId = User.Identity.GetUserId() })</button>
+                    }
+                    <span class="glyphicon glyphicon-comment"></span>@Html.Action("GetCount", "Comment", new { PhotoId = item.Id })
+
+                    @if (ViewBag.Id == User.Identity.GetUserId())
+                    {
+                        @Html.ActionLink(" ", "Edit", new { id = item.Id }, htmlAttributes: new { @class = "glyphicon glyphicon-pencil", @onclick = "event.stopPropagation();" })
+                        @Html.ActionLink(" ", "Delete", new { id = item.Id }, htmlAttributes: new { @class = "glyphicon glyphicon-remove", @onclick = "event.stopPropagation();" })
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div><br />
+<br />
+
+<div class="row text-center">
+
+    <div> @Html.PageLinks(Model.PagingInfo, x => Url.Action("Photos", new { page = x })) </div>
+    <br /><br />
+
+
+</div>

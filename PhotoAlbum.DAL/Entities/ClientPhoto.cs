@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace PhotoAlbum.DAL.Entities
@@ -12,6 +13,8 @@ namespace PhotoAlbum.DAL.Entities
         public ICollection<Like> Likes { get; set; }
         public bool IsBlocked { get; set; } = false;
         public bool IsAvatar { get; set; } = false;
+        public DateTime Date { get; set; }
+        public string Description { get; set; }
 
         public ClientPhoto()
         {

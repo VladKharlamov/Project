@@ -9,6 +9,7 @@ namespace PhotoAlbum.BLL.Interfaces
         UserPhotoBLL GetPhoto(string id);
         IEnumerable<UserPhotoBLL> GetPhotos();
         IEnumerable<UserPhotoBLL> GetPhotosByUser(string userId);
+        IEnumerable<UserPhotoBLL> GetPhotosBySearch(string search);
         void EditPhoto(UserPhotoBLL userPhotoBll);
         void RemovePhoto(UserPhotoBLL userPhotoBll);
     }

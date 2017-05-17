@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace PhotoAlbum.DAL.Entities
 {
@@ -12,5 +13,7 @@ namespace PhotoAlbum.DAL.Entities
         public ClientPhoto Photo { get; set; }
 
         public ClientProfile User { get; set; }
+        public DateTime Date { get; set; }
+
     }
 }

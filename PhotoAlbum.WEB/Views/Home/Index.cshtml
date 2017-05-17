@@ -33,10 +33,10 @@
     {
         <div class="row">
             <div class="col-md-6 text-center">
-                <div class="btn btn-lg btn-default"  style="width: 90%; padding: 20px; margin: 7px">@Html.ActionLink("Sign in", "Login", "Account")</div>
+                @Html.ActionLink("Sign in", "Login", "Account", null, htmlAttributes: new { @class = "btn btn-lg btn-default", @style = "width: 90%; padding: 20px; margin-bottom: 14px" })
             </div>
             <div class="col-md-6 text-center">
-                <div class="btn btn-lg btn-default" style="width: 90%; padding: 20px; margin: 7px">@Html.ActionLink("Sign up", "Register", "Account")</div>
+                @Html.ActionLink("Sign up", "Register", "Account", null, htmlAttributes: new { @class = "btn btn-lg btn-default", @style = "width: 90%; padding: 20px; margin-bottom: 14px" })
             </div>
 
         </div>
@@ -45,10 +45,9 @@
     }
     else
     {
-
         <div class="row">
             <div class="col-md-12 text-center">
-                <a class="btn btn-lg btn-default" style="width: 97%; padding: 20px; margin: 7px" href="@Url.Action("Photos", "Photo")">My photo</a>
+                @Html.ActionLink("My photo", "Photos", "Photo", new { id = User.Identity.GetUserId() }, new { @class = "btn btn-lg btn-default", @style = "width: 97%; padding: 20px" })
             </div>
         </div>
 

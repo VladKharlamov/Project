@@ -10,74 +10,55 @@
 @section styles {
     @Styles.Render("~/Content/Css/Style.css")
 }
-<br/>
-<br/>
-<div class="text-center">
-    <span style="font-size: 14pt"> @User.Identity.Name </span>
-    <a href="@Url.Action("Create")" class="btn btn-lg btn-follow">Follow  999</a>
-    <a href="@Url.Action("Create")" class="btn btn-lg btn-default">Followed  1000</a>
-</div>
 <br />
 <br />
+@if (User.Identity.GetUserId() != ViewBag.Id)
+{
+    <div class="text-center">
+        <span style="font-size: 14pt"> @User.Identity.Name </span>
+        @using (Ajax.BeginForm("AddOrRemoveFollower", "Follow", new { UserId = ViewBag.Id }, new AjaxOptions()
+        {
+            InsertionMode = InsertionMode.Replace,
+            UpdateTargetId = "follows",
+            HttpMethod = "post"
+
+        }))
+        {
+            <span id="follows">
+                @Html.Action("GetCount", "Follow", new { Id = ViewBag.Id })
+            </span>
+        }
+
+    </div>
+    <br />
+    <br />
+}
 <div class="row text-center images-list">
 
     @foreach (var item in Model.UserPhotos)
     {
         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 image-item">
-            <a class="image-item-wrapper view-photo" href="@Url.Action("ViewPhoto", "Photo", new { Id = item.Id })">
+            <div class="image-item-wrapper view-photo" href="@Url.Action("ViewPhoto", "Photo", new { Id = item.Id })">
 
-                <img src="@item.PhotoAddress" width="390px"/>
-               <div class="image-item-set">@*<span class="glyphicon glyphicon-heart"> @Html.Action("Like", "Like",
-    new LikeBLL() { PhotoId = item.Id, UserId = User.Identity.GetUserId() })*@
-                    
-                    @*@if (@ViewBag.liked)
-                    {*@
-                    @*}
-    else
-    {
-        <span style="font-size: 30px" class="glyphicon glyphicon-heart"></span>
-    }*@
+                <img src="@item.PhotoAddress" />
+                <div class="image-item-set">
+                    @using (Ajax.BeginForm("LikeSave", "Like", new { PhotoId = item.Id, UserId = User.Identity.GetUserId() }, new AjaxOptions
+                    {
+                        InsertionMode = InsertionMode.Replace,
+                        UpdateTargetId = "savingresult_" + item.GetHashCode()
+                    }))
+                    {
+                        <button class="btn-transparent" onclick="event.stopPropagation();" id="savingresult_@item.GetHashCode()">@Html.Action("LikeCount", "Like", new LikeBLL() { PhotoId = item.Id, UserId = User.Identity.GetUserId() })</button>
+                    }
+                    <span class="glyphicon glyphicon-comment"></span>@Html.Action("GetCount", "Comment", new { PhotoId = item.Id })
 
-
-                @*@using (Html.BeginForm()) {*@
-                @using (Ajax.BeginForm("LikeSave", "Like", new AjaxOptions
-                {
-                    InsertionMode = InsertionMode.Replace,
-                    UpdateTargetId = "savingresult_" + item.GetHashCode(),
-                    LoadingElementId = "loader"
-                }))
-                {
-                    <input type="hidden" id="PhotoId" name="PhotoId" value="@item.Id" />
-                    <input type="hidden" id="UserId" name="UserId" value="@User.Identity.GetUserId()" />
-                    <button class="btn-transparent">
-
-                        <div id="savingresult_@item.GetHashCode()">
-                            @*@if (@ViewBag.liked)
-            {*@
-                            @Html.Action("LikeCount", "Like", new LikeBLL() { PhotoId = item.Id, UserId = User.Identity.GetUserId() })
-                            @*}
-            else
-            {
-                <span style="font-size: 30px" class="glyphicon glyphicon-heart"></span>
-            }*@
-                        </div>
-                    </button>
-                }
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-    @*</span>*@@*&nbsp; @Html.Action("LikeCount","Like",
-    new LikeBLL() { PhotoId = item.Id, UserId = item.UserId})*@ &nbsp; <span class="glyphicon glyphicon-comment"></span> &nbsp; 20
+                    @if (ViewBag.Id == User.Identity.GetUserId())
+                    {
+                        @Html.ActionLink(" ", "Edit", new { id = item.Id }, htmlAttributes: new { @class = "glyphicon glyphicon-pencil", @onclick = "event.stopPropagation();" })
+                        @Html.ActionLink(" ", "Delete", new { id = item.Id }, htmlAttributes: new { @class = "glyphicon glyphicon-remove", @onclick = "event.stopPropagation();" })
+                    }
                 </div>
-            </a>
-            @*@Html.ActionLink("Likes", "Edit", new { id = item.Id }) |
-            @Html.ActionLink("Comments", "Comments", "Comment", new { id = item.Id }, null) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.Id, photoAddress = item.PhotoAddress }) |
-            @Html.ActionLink("OnAvatar", "OnAvatar", new { id = item.Id })*@
+            </div>
         </div>
     }
 </div><br />
@@ -86,10 +67,10 @@
 <div class="row text-center">
 
     <div> @Html.PageLinks(Model.PagingInfo, x => Url.Action("Photos", new { page = x })) </div>
-    <br/><br />
-
-    <p class="btn btn-lg btn-default" style="width: 300px; margin:auto; padding: 20px">
-        @Html.ActionLink("Add new photo", "Create")
-    </p>
+    <br /><br />
+    @if (User.Identity.GetUserId() == ViewBag.Id)
+    {
+        @Html.ActionLink("Add new photo", "Create", null, htmlAttributes: new { @class = "btn btn-lg btn-default", @style = "width: 260px; margin: auto; padding: 20px" })
+    }
     <br /><br />
 </div>

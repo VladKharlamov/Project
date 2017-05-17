@@ -32,7 +32,9 @@ namespace PhotoAlbum.BLL.Services
                 Id = Guid.NewGuid().ToString(),
                 PhotoAddress = userPhotoBll.PhotoAddress,
                 IsBlocked = userPhotoBll.IsBlocked,
-                User = _db.ClientManager.Find(p=>p.Id == userPhotoBll.UserId).Single()
+                User = _db.ClientManager.Find(p=>p.Id == userPhotoBll.UserId).Single(),
+                Description =userPhotoBll.Description,
+                Date = DateTime.Now
             });
 
             _db.SaveAsync();
@@ -53,7 +55,11 @@ namespace PhotoAlbum.BLL.Services
             var photos = _db.Photos.Find(p => p.User.Id == userId);
             return _mapper.Map<IEnumerable<ClientPhoto>, IEnumerable<UserPhotoBLL>>(photos);
         }
-
+        public IEnumerable<UserPhotoBLL> GetPhotosBySearch(string search)
+        {
+            var photos = _db.Photos.Find(p => p.Description.Contains(search));
+            return _mapper.Map<IEnumerable<ClientPhoto>, IEnumerable<UserPhotoBLL>>(photos);
+        }
         public void EditPhoto(UserPhotoBLL userPhotoBll)
         {
             if (userPhotoBll == null)
@@ -65,6 +71,8 @@ namespace PhotoAlbum.BLL.Services
             photo.Id = userPhotoBll.Id;
             photo.IsAvatar = userPhotoBll.IsAvatar;
             photo.IsBlocked = userPhotoBll.IsBlocked;
+            photo.Description = userPhotoBll.Description;
+
             _db.Photos.Update(photo);
             _db.SaveAsync();
         }

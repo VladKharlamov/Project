@@ -7,8 +7,6 @@ using MimeKit;
 using PhotoAlbum.BLL.Infrastructure;
 using PhotoAlbum.BLL.Interfaces;
 using PhotoAlbum.DAL.Interfaces;
-using Microsoft.Owin.Security.DataProtection;
-using Microsoft.AspNet.Identity.Owin;
 using PhotoAlbum.DAL.Entities;
 
 namespace PhotoAlbum.BLL.Services

@@ -1,12 +1,15 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNet.Identity
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Photoalbum</title>
-    @Styles.Render("~/Content/css")
+    @Styles.Render("~/bundles/css")
     @Scripts.Render("~/bundles/modernizr")
     @RenderSection("styles", required: false)
+
+
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -25,8 +28,8 @@
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>
-                <form action="url_сюда" class="navbar-form navbar-left" method="post">
-                    <input type="text" class="form-control" placeholder="Search..." name="searchQuery">
+                <form action="@Url.Action("Search","Photo")" class="navbar-form navbar-left">
+                    <input type="text" class="form-control" placeholder="Search..." name="string">
                 </form>
 
                 <ul class="nav navbar-nav navbar-right">
@@ -41,16 +44,19 @@
                     }
                     else
                     {
-                        <li>
-                            <a>Hello @User.Identity.Name</a>
+                        <li>@Html.ActionLink("My photo", "Photos", "Photo", new { id = User.Identity.GetUserId() }, null)</li>
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Hello @User.Identity.Name <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Change password", "ChangePassword", "Account")</li>
+                                <li>@Html.ActionLink("Logout", "Logout", "Account")</li>
+                            </ul>
                         </li>
-                        <li>@Html.ActionLink("My photo", "Photos", "Photo")</li>
-                        <li>@Html.ActionLink("Change password", "ChangePassword", "Account")</li>
-                        <li>@Html.ActionLink("Logout", "Logout", "Account")</li>
                     }
 
                 </ul>
-</div>
+            </div>
         </div>
     </div>
     <div class="container body-content">
@@ -63,6 +69,7 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/js")
     @RenderSection("scripts", required: false)
 </body>
 </html>

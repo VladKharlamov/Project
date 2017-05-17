@@ -19,7 +19,7 @@ namespace PhotoAlbum.WEB
                 cfg.CreateMap<UserPhotoBLL, UserPhotoModel>();
                 cfg.CreateMap<LikeBLL, LikeModel>();
                 cfg.CreateMap<CommentBLL, CommentModel>();
-                cfg.CreateMap<SubscribeBLL, SubcribeModel>();
+                cfg.CreateMap<FollowBLL, FollowModel>();
             });
         }
     }

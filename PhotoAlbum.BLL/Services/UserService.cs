@@ -57,10 +57,11 @@ namespace PhotoAlbum.BLL.Services
             ApplicationUser user = await _db.UserManager.FindAsync(userBll.Email, userBll.Password);
 
             if (user != null)
-                claim = await _db.UserManager.CreateIdentityAsync(user,
+            {
+                claim = _db.UserManager.CreateIdentity(user,
                                             DefaultAuthenticationTypes.ApplicationCookie);
-            claim.AddClaim(new Claim("Name", user.ClientProfile.Name));
-
+                claim.AddClaim(new Claim("Name", user.ClientProfile.Name));
+            }
             return claim;
         }
 
@@ -122,7 +123,22 @@ namespace PhotoAlbum.BLL.Services
         //        return new OperationDetails(false, "Проверьте введенные данные", "");
         //    }
         //}
+        public void ChangeRole(UserBLL userBll, string newRole)
+        {
+            if (userBll == null)
+            {
+                throw new ArgumentNullException("Object cannot be null");
+            }
 
+            var user = _db.ClientManager.Find(p => p.Id == userBll.Id).Single();
+            if (newRole == "admin" || newRole == "moderator" || newRole == "user")
+            {
+                _db.UserManager.RemoveFromRole(user.Id, userBll.Role);
+                _db.UserManager.AddToRole(user.Id, newRole);
+
+                _db.SaveAsync();
+            }
+        }
         public void EditUser(UserBLL userBll)
         {
             if (userBll == null)
@@ -134,13 +150,13 @@ namespace PhotoAlbum.BLL.Services
             {
                 throw new ArgumentException("Name can't be empty");
             }
-
             var user = _db.ClientManager.Find(p => p.Id == userBll.Id).Single();
             user.Id = userBll.Id;
             user.Name = userBll.Name;
             user.Birthday = userBll.Birthday;
             user.ApplicationUser.Email = userBll.Email;
             user.ApplicationUser.UserName = userBll.Email;
+
             //_db.UserManager.ChangePasswordAsync(userBll.Id,)
             //    user.Password = userBll.ApplicationUser.PasswordHash;
 

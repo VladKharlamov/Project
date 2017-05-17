@@ -1,4 +1,6 @@
-﻿namespace PhotoAlbum.BLL.EnittyBLL
+﻿using System;
+
+namespace PhotoAlbum.BLL.EnittyBLL
 {
     public class CommentBLL
     {
@@ -9,5 +11,7 @@
         public string PhotoId { get; set; }
 
         public string UserId { get; set; }
+        public DateTime Date { get; set; }
+
     }
 }

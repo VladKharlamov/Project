@@ -45,7 +45,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Bithday, htmlAttributes: new { @class = "control-label col-md-2 col-md-offset-1" })
                 <div class="col-md-9">
-                    @Html.EditorFor(model => model.Bithday, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.Bithday, new { htmlAttributes = new { @class = "form-control datepicker" } })
                     @Html.ValidationMessageFor(model => model.Bithday, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -71,6 +71,13 @@
     </div>
 }
 
+
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $('.datepicker').datepicker({
+            dateFormat: 'mm/dd/yy'
+        });
+    </script>
 }

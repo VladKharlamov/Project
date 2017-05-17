@@ -10,13 +10,12 @@ using Microsoft.AspNet.Identity;
 using PhotoAlbum.BLL.EnittyBLL;
 using PhotoAlbum.BLL.Interfaces;
 using PhotoAlbum.WEB.Models;
-using PhotoAlbum.WEB.Utils;
 
 namespace PhotoAlbum.WEB.Controllers
 {
     public class PhotoController : Controller
     {
-        private int PageSize = 9;
+        private int PageSize = 12;
         private IMapper _mapper;
         public PhotoController(IPhotoService photoService)
         {
@@ -26,14 +25,13 @@ namespace PhotoAlbum.WEB.Controllers
 
         private IPhotoService PhotoService;
 
-        // GET: Photo
-        [AllowAnonymous]
-        public ActionResult Photos( string id , int page = 1)
+        public ActionResult Photos( string id = null, int page = 1)
         {
-            IEnumerable<UserPhotoBLL> photosByUser = PhotoService.GetPhotosByUser(string.IsNullOrEmpty(id) ? User.Identity.GetUserId() : id );
+            id = string.IsNullOrEmpty(id) ? User.Identity.GetUserId() : id;
+            IEnumerable<UserPhotoBLL> photosByUser = PhotoService.GetPhotosByUser(id);
             PhotoPageViewModel model = new PhotoPageViewModel()
             {
-                UserPhotos = photosByUser.Select(_mapper.Map<UserPhotoBLL, UserPhotoModel>).OrderBy(p => p.Id).Skip((page - 1) * PageSize).Take(PageSize).ToList(),
+                UserPhotos = photosByUser.Select(_mapper.Map<UserPhotoBLL, UserPhotoModel>).OrderByDescending(p => p.Date).Skip((page - 1) * PageSize).Take(PageSize).ToList(),
                 PagingInfo = new PagingInfo()
                 {
                     CurrentPage = page,
@@ -41,38 +39,48 @@ namespace PhotoAlbum.WEB.Controllers
                     TotalItems = photosByUser.Count()
                 }
             };
+            ViewBag.Id = id;
             return View(model);
         }
-        public ImageResult Partial(string path)
+        public ActionResult Search(string @string, int page = 1)
         {
-            
-            ViewBag.Message = "Это частичное представление.";
-            return new ImageResult(path);
+            IEnumerable<UserPhotoBLL> photosBySearch = PhotoService.GetPhotosBySearch(@string);
+            PhotoPageViewModel model = new PhotoPageViewModel()
+            {
+                UserPhotos = photosBySearch.Select(_mapper.Map<UserPhotoBLL, UserPhotoModel>).OrderByDescending(p => p.Date).Skip((page - 1) * PageSize).Take(PageSize).ToList(),
+                PagingInfo = new PagingInfo()
+                {
+                    CurrentPage = page,
+                    ItemsPerPage = PageSize,
+                    TotalItems = photosBySearch.Count()
+                }
+            };
+            return View(model);
         }
-        //// GET: Product/Create
+
         [HttpGet]
         public ActionResult Create()
         {
             return View();
         }
 
-        //// POST: Product/Create
         [HttpPost]
-        public ActionResult Create(HttpPostedFileBase upload)
+        public ActionResult Create(HttpPostedFileBase upload, UserPhotoModel model)
         {
             if (upload != null)
             {
                 if (IsImage(upload))
                 {
-                    string fileName = System.IO.Path.GetFileName(upload.FileName);
+                    //string fileName = System.IO.Path.GetFileName(upload.FileName);
                     Directory.CreateDirectory(Server.MapPath("/Content/UserPhotos/" + User.Identity.GetUserId() + "/"));
-                    string address = Server.MapPath("/Content/UserPhotos/" + User.Identity.GetUserId() + "/" + fileName);
+                    string address = Server.MapPath("/Content/UserPhotos/" + User.Identity.GetUserId() + "/" + Guid.NewGuid().ToString()+"."+ upload.FileName.Substring(upload.FileName.LastIndexOf(".") + 1));
                     upload.SaveAs(address);
 
                     PhotoService.AddPhoto(new UserPhotoBLL()
                     {
                         PhotoAddress = @"\" + address.Replace(Request.PhysicalApplicationPath, String.Empty),
-                        UserId = User.Identity.GetUserId()
+                        UserId = User.Identity.GetUserId(),
+                        Description = model.Description
                     });
                     return RedirectToAction("Photos");
                 }
@@ -88,7 +96,7 @@ namespace PhotoAlbum.WEB.Controllers
             string[] formats = new string[] { ".jpg", ".png", ".gif", ".jpeg" }; // add more if u like...
             return formats.Any(item => file.FileName.EndsWith(item, StringComparison.OrdinalIgnoreCase));
         }
-        public ActionResult Delete(string id, string photoAddress)
+        public ActionResult Delete(string id)
         {
             if (string.IsNullOrEmpty(id))
             {
@@ -106,19 +114,16 @@ namespace PhotoAlbum.WEB.Controllers
         [HttpPost]
         public ActionResult Delete(UserPhotoModel photo)
         {
-            try
-            {
+
+                var photoModel = PhotoService.GetPhoto(photo.Id);
+
                 PhotoService.RemovePhoto(new UserPhotoBLL()
                 {
                     Id = photo.Id,
                 });
-                System.IO.File.Delete(photo.PhotoAddress);
+                System.IO.File.Delete(Server.MapPath(photoModel.PhotoAddress));
                 return RedirectToAction("Photos");
-            }
-            catch
-            {
-                return View();
-            }
+ 
         }
         public ActionResult OnAvatar(string id)
         {
@@ -164,25 +169,46 @@ namespace PhotoAlbum.WEB.Controllers
             {
                 return HttpNotFound();
             }
+            return View(_mapper.Map<UserPhotoBLL, UserPhotoModel>(photo));
+        }
+
+        public ActionResult Edit(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var photo = PhotoService.GetPhoto(id);
+            if (photo == null)
+            {
+                return HttpNotFound();
+            }
 
             return View(_mapper.Map<UserPhotoBLL, UserPhotoModel>(photo));
         }
 
-        private ILikeService _likeService;
-        // GET: Like
-        public ActionResult Likes(string photoid)
+        [HttpPost]
+        public ActionResult Edit(UserPhotoModel photo)
         {
-            IEnumerable<LikeBLL> likeByPhoto = _likeService.GetLikesByPhoto(photoid);
-            var model = likeByPhoto.Select(_mapper.Map<LikeBLL, LikeModel>);
-            return View(model);
-        }
+            try
+            {
+                if (!string.IsNullOrEmpty(photo.Description))
+                {
+                    PhotoService.EditPhoto(new UserPhotoBLL()
+                    {
+                        Id = photo.Id,
+                        Description = photo.Description
+                    });
+                }
+                return RedirectToAction("Photos", new { id = User.Identity.GetUserId() });
 
-        // GET: Like/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
+            }
+            catch
+            {
+                return View();
+            }
         }
 
     }
-
 }

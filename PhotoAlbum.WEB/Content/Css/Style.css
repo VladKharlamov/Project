@@ -10,13 +10,13 @@
     padding-bottom: 30px;
 }
 
-.images-list .image-item-wrapper {
-    width: 15em;
-    height: 15em;
-    display: inline-block;
-    position: relative;
-    overflow: hidden;
-}
+    .images-list .image-item-wrapper {
+        width: 15em;
+        height: 15em;
+        display: inline-block;
+        position: relative;
+        overflow: hidden;
+    }
 
 .image-item {
     padding: .5em .5em;
@@ -43,11 +43,21 @@
     align-items: center;
     background-color: rgba(0,0,0,.3);
     opacity: 0;
-   transform: scale(2);
+    transform: scale(2);
 }
 
-.image-item-set .glyphicon-heart {
-    margin-right: 2px;
+.image-item-set a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.image-item-set .glyphicon {
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+.image-item-set .glyphicon-pencil {
+    margin-left: 10px;
 }
 
 .image-item-wrapper:hover .image-item-set {
@@ -67,6 +77,10 @@
 }
 
 .btn.btn-follow {
+    width: 188.65px;
+}
+
+.btn.btn-follow:not(.followed) {
     margin: auto;
     padding: 10px 60px;
     background: #ff4949;
@@ -74,7 +88,7 @@
     transition: all .5s;
 }
 
-.btn.btn-follow:hover {
+.btn.btn-follow:not(.followed):hover {
     background: red;
 }
 
@@ -86,6 +100,7 @@
 .red-font {
     color: #ff4949;
 }
+
 .table > tbody > tr > td {
     vertical-align: middle;
 }
@@ -107,7 +122,81 @@
     width: 100%;
 }
 
+.view-photo-about {
+    padding: 8px;
+    border-bottom: 1px solid #ccc;
+}
 
+.right {
+    float: right;
+}
+
+.left {
+    float: left;
+}
+
+.vhal {
+    display: inline;
+    vertical-align: -12px;
+}
+
+.shadow {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,.5);
+    top: 0;
+    left: 0;
+    overflow-x: auto;
+    z-index: 10000;
+    padding: 20px;
+}
+
+    .shadow .remove {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        color: #fff;
+        font-size: 40px;
+        cursor: pointer;
+    }
+
+body.view-photo {
+    overflow: hidden;
+}
+
+.shadow .view-photo-wrapper {
+    padding: 20px;
+    background-color: #fff;
+}
+
+.view-photo-comments-form {
+    width: 100%;
+    border: 1px solid #ccc;
+}
+
+    .view-photo-comments-form textarea {
+        width: 100%;
+        border: none;
+        resize: unset;
+        padding: 8px;
+    }
+
+    .view-photo-comments-form input[type="submit"] {
+        display: block;
+        width: 100%;
+        padding: 8px;
+        border: none;
+        background-color: #3897f0;
+        color: #fff;
+        text-align: center;
+    }
+.dropdown-menu > li > a {
+    font-size: 16px;
+}
+.date {
+    color: #909090;
+}
 @media (min-width: 768px) {
     .images-list .image-item-wrapper {
         width: 25em;
@@ -116,26 +205,8 @@
 
     .view-photo-wrapper {
         margin: 0 auto;
-        max-width: 90%;
+        max-width: 50%;
         position: relative;
-    }
-
-    .view-photo-image {
-        width: 50%;
-        overflow: hidden
-    }
-
-    .view-photo-info {
-        width: 50%;
-        height: 100%;
-        position: absolute;
-        top: 0;
-        right: 0;
-        overflow-y: auto;
-    }
-
-    .view-photo-about {
-        padding: 10px;
     }
 }
 

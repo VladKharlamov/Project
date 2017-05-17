@@ -7,22 +7,32 @@
 <h2>Create</h2>
 
 
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h3>Выберите файл для загрузки</h3>
-        @using (Html.BeginForm("Create", "Photo", FormMethod.Post, new { enctype = "multipart/form-data" }))
-        {
-            <div class="form-group">
-                <input type="file" name="upload" id="upload" class="btn btn-default" /><br>
+@Html.AntiForgeryToken()
 
-                
-                    <input type="submit" value="Add photo" class="btn btn-default" />
+<div class="form-horizontal">
+    <h3>Выберите файл для загрузки</h3>
+    @using (Html.BeginForm("Create", "Photo", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="form-group">
+            @Html.Label("File", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.Editor("upload", new { htmlAttributes = new { @class = "btn btn-default", @type = "file" } })
             </div>
-        }
         </div>
-
-
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Description, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Add photo" class="btn btn-default" />
+            </div>
+        </div>
+    }
+</div>
 
 
 

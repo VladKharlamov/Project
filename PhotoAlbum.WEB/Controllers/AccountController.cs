@@ -82,7 +82,7 @@ namespace PhotoAlbum.WEB.Controllers
 
             return View(_mapper.Map<UserBLL, UserModel>(user));
         }
-
+        [Authorize(Roles = "admin, moderator")]
         public ActionResult Edit(string id)
         {
             if (string.IsNullOrEmpty(id))
@@ -98,6 +98,7 @@ namespace PhotoAlbum.WEB.Controllers
             return View(_mapper.Map<UserBLL, UserModel>(user));
         }
 
+        [Authorize(Roles = "admin, moderator")]
         [HttpPost]
         public ActionResult Edit(UserModel user)
         {
@@ -111,8 +112,6 @@ namespace PhotoAlbum.WEB.Controllers
                     Birthday = user.Birthday,
                     Email = user.Email,
                     UserName = user.UserName,
-                    Role = user.Role,
-                    Password = user.Password
                 });
 
                 return RedirectToAction("UserManagement");
@@ -123,6 +122,43 @@ namespace PhotoAlbum.WEB.Controllers
             }
         }
 
+        [Authorize(Roles = "admin")]
+        public ActionResult ChangeRole(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var user = UserService.GetUser(id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(_mapper.Map<UserBLL, UserModel>(user));
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpPost]
+        public ActionResult ChangeRole(UserModel user, string newRole)
+        {
+            try
+            {
+                UserService.ChangeRole(new UserBLL()
+                {
+
+                    Id = user.Id,
+                    Role = user.Role,
+                }, newRole);
+
+                return RedirectToAction("UserManagement");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+        [Authorize(Roles = "admin")]
         public ActionResult Delete(string id)
         {
             if (string.IsNullOrEmpty(id))
@@ -138,6 +174,7 @@ namespace PhotoAlbum.WEB.Controllers
             return View(_mapper.Map<UserBLL, UserModel>(user));
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public ActionResult Delete(UserModel user)
         {
@@ -250,7 +287,6 @@ namespace PhotoAlbum.WEB.Controllers
             return View(result.Succedeed ? "ConfirmEmail" : "Error");
         }
 
-        [Authorize]
         public ActionResult ChangePassword()
         {
             return View();

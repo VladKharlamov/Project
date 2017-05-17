@@ -9,34 +9,46 @@
 }
 
 <h2>ViewPhoto</h2>
-<div class="view-photo-wrapper">
+<div class="view-photo-wrapper" id="photo">
     <div class="view-photo-image">
         <img src="@Html.DisplayFor(model => model.PhotoAddress)" />
     </div>
     <div class="view-photo-info">
         <div class="view-photo-about">
-            About photo
+            <div>@Html.DisplayFor(model => model.Description)</div>
+            <div>
+                <span class="glyphicon glyphicon-heart"></span> &nbsp; @Html.Action("GetLikesCount", "Like", new { PhotoId = Model.Id })
+                &nbsp;
+                <span class="glyphicon glyphicon-comment"></span> &nbsp; @Html.Action("GetCount", "Comment", new { PhotoId = Model.Id })
+            </div>
+            <div class="clearfix"></div>
         </div>
-        <div class="view-photo-comments">
-            <div class="view-photo-comment">Hello, good photo, fuck you!</div>
-            <div class="view-photo-comment">Hello, good photo, fuck you!</div>
-            <div class="view-photo-comment">Hello, good photo, fuck you!</div>
-            <div class="view-photo-comment">Hello, good photo, fuck you!</div>
-            <div class="view-photo-comment">Hello, good photo, fuck you!</div>
-            <div class="view-photo-comment">Hello, good photo, fuck you!</div>
-            <div class="view-photo-comment">Hello, good photo, fuck you!</div>
-            <div class="view-photo-comment">Hello, good photo, fuck you!</div>
-            <div class="view-photo-comment">Hello, good photo, fuck you!</div>
-            <div class="view-photo-comment">Hello, good photo, fuck you!</div>
-            <div class="view-photo-comment">Hello, good photo, fuck you!</div>
-            <div class="view-photo-comment">Hello, good photo, fuck you!</div>
-            <div class="view-photo-comment">Hello, good photo, fuck you!</div>
+        <div class="view-photo-comments" id="comments">
+            @Html.Action("Comments", "Comment", new { Id = Model.Id })
+        </div>
+        <div class="view-photo-comments-form">
+            @using (Ajax.BeginForm("AddComment", "Comment", new { PhotoId = Model.Id }, new AjaxOptions()
+            {
+                HttpMethod = "Post",
+                UpdateTargetId = "comments",
+                InsertionMode = InsertionMode.Replace,
+                OnComplete = "$('#message').val('')"
+
+            }))
+            {
+                <form action="" method="post">
+                    <textarea name="message" id="message"></textarea>
+                    <input type="submit" name="add" value="Добавить" />
+                </form>
+            }
         </div>
     </div>
+
 </div>
+
 <div class="clearfix"></div>
 
 
 <p>
-    @Html.ActionLink("Back to List", "Photos", "Photo", new { Id = Model.UserId}, null)
+    @Html.ActionLink("Back to List", "Photos", "Photo", new { Id = Model.UserId }, null)
 </p>

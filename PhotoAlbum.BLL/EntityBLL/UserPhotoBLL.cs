@@ -1,4 +1,6 @@
-﻿namespace PhotoAlbum.BLL.EnittyBLL
+﻿using System;
+
+namespace PhotoAlbum.BLL.EnittyBLL
 {
     public class UserPhotoBLL
     {
@@ -7,5 +9,7 @@
         public bool IsBlocked { get; set; } = false;
         public string UserId { get; set; }
         public bool IsAvatar { get; set; }
+        public DateTime Date { get; set; }
+        public string Description { get; set; }
     }
 }

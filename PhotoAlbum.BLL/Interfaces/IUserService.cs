@@ -14,7 +14,7 @@ namespace PhotoAlbum.BLL.Interfaces
         Task SetInitialData(UserBLL adminBll, List<string> roles);
         OperationDetails ChangePassword(string id, string currentPassword, string newPassword);
 
-
+        void ChangeRole(UserBLL userBll, string newRole);
         IEnumerable<UserBLL> GetAllUsers();
         UserBLL GetUser(string id);
         void EditUser(UserBLL userBll);

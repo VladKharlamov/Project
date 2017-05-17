@@ -24,9 +24,9 @@ namespace PhotoAlbum.BLL.Infrastructure
                     .ForMember(dto => dto.UserId, m => m.MapFrom(cp => cp.User.Id))
                     .ForMember(dto => dto.PhotoId, m => m.MapFrom(cp => cp.Photo.Id));
 
-                    cfg.CreateMap<Subscribe, SubscribeBLL>()
+                    cfg.CreateMap<Follow, FollowBLL>()
                         .ForMember(dto => dto.UserId, m => m.MapFrom(cp => cp.User.Id))
-                        .ForMember(dto => dto.SubcriberId, m => m.MapFrom(cp => cp.User.Id));
+                        .ForMember(dto => dto.FollowerId, m => m.MapFrom(cp => cp.User.Id));
 
 
                     cfg.CreateMap<Comment, CommentBLL>()

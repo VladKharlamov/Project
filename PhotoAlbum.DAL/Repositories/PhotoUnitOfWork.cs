@@ -19,7 +19,7 @@ namespace PhotoAlbum.DAL.Repositories
 
         public IRepository<Like> Categories { get; }
 
-        public IRepository<Subscribe> Subcribers { get; }
+        public IRepository<Follow> Followers { get; }
 
 
         public PhotoUnitOfWork(string connectionString)
@@ -30,7 +30,7 @@ namespace PhotoAlbum.DAL.Repositories
             Comments = new Repository<Comment>(_db);
             Likes = new Repository<Like>(_db);
             Categories = new Repository<Like>(_db);
-            Subcribers = new Repository<Subscribe>(_db);
+            Followers = new Repository<Follow>(_db);
         }
 
         #region Dispose

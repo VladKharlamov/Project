@@ -71,7 +71,7 @@ namespace PhotoAlbum.WEB
             kernel.Bind<IEmailService>().To<EmailService>();
             kernel.Bind<ICommentService>().To<CommentService>();
             kernel.Bind<ILikeService>().To<LikeService>();
-            kernel.Bind<ISubcribeService>().To<SubcribeService>();
+            kernel.Bind<IFollowService>().To<FollowService>();
         }
     }
 }
