@@ -337,11 +337,12 @@
     <Content Include="Views\Photo\Create.cshtml" />
     <Content Include="Views\Photo\Delete.cshtml" />
     <Content Include="Views\Photo\Edit.cshtml" />
+    <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\Error\Forbidden.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\UserPhotos\" />
-    <Folder Include="Views\Error\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

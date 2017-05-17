@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using PhotoAlbum.BLL.EnittyBLL;
 using PhotoAlbum.BLL.Interfaces;
 using PhotoAlbum.WEB.Models;
@@ -22,12 +23,23 @@ namespace PhotoAlbum.WEB.Controllers
             _mapper = new MappingMVCProfile().Config.CreateMapper();
             PhotoService = photoService;
         }
-
+        private IUserService UserService
+        {
+            get
+            {
+                return HttpContext.GetOwinContext().GetUserManager<IUserService>();
+            }
+        }
         private IPhotoService PhotoService;
 
-        public ActionResult Photos( string id = null, int page = 1)
+        public ActionResult Photos(string id = null, int page = 1)
         {
             id = string.IsNullOrEmpty(id) ? User.Identity.GetUserId() : id;
+            if (UserService.GetUser(id)==null)
+            {
+               return new HttpNotFoundResult();
+            }
+
             IEnumerable<UserPhotoBLL> photosByUser = PhotoService.GetPhotosByUser(id);
             PhotoPageViewModel model = new PhotoPageViewModel()
             {
@@ -73,7 +85,7 @@ namespace PhotoAlbum.WEB.Controllers
                 {
                     //string fileName = System.IO.Path.GetFileName(upload.FileName);
                     Directory.CreateDirectory(Server.MapPath("/Content/UserPhotos/" + User.Identity.GetUserId() + "/"));
-                    string address = Server.MapPath("/Content/UserPhotos/" + User.Identity.GetUserId() + "/" + Guid.NewGuid().ToString()+"."+ upload.FileName.Substring(upload.FileName.LastIndexOf(".") + 1));
+                    string address = Server.MapPath("/Content/UserPhotos/" + User.Identity.GetUserId() + "/" + Guid.NewGuid().ToString() + "." + upload.FileName.Substring(upload.FileName.LastIndexOf(".") + 1));
                     upload.SaveAs(address);
 
                     PhotoService.AddPhoto(new UserPhotoBLL()
@@ -85,7 +97,7 @@ namespace PhotoAlbum.WEB.Controllers
                     return RedirectToAction("Photos");
                 }
             }
-                return View();
+            return View();
         }
         private bool IsImage(HttpPostedFileBase file)
         {
@@ -115,15 +127,15 @@ namespace PhotoAlbum.WEB.Controllers
         public ActionResult Delete(UserPhotoModel photo)
         {
 
-                var photoModel = PhotoService.GetPhoto(photo.Id);
+            var photoModel = PhotoService.GetPhoto(photo.Id);
 
-                PhotoService.RemovePhoto(new UserPhotoBLL()
-                {
-                    Id = photo.Id,
-                });
-                System.IO.File.Delete(Server.MapPath(photoModel.PhotoAddress));
-                return RedirectToAction("Photos");
- 
+            PhotoService.RemovePhoto(new UserPhotoBLL()
+            {
+                Id = photo.Id,
+            });
+            System.IO.File.Delete(Server.MapPath(photoModel.PhotoAddress));
+            return RedirectToAction("Photos");
+
         }
         public ActionResult OnAvatar(string id)
         {
