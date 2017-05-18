@@ -6,12 +6,12 @@ namespace PhotoAlbum.DAL.Interfaces
 {
     public interface IPhotoUnitOfWork : IDisposable
     {
-        IClientManager ClientManager { get; }
-        IRepository<ClientPhoto> Photos { get; }
-        IRepository<Like> Likes { get; }
-        IRepository<Comment> Comments { get; }
-        IRepository<Like> Categories { get; }
-        IRepository<Follow> Followers { get; }
+        IUserRepository UserRepository { get; }
+        IGenericRepository<UserPhoto> Photos { get; }
+        IGenericRepository<Like> Likes { get; }
+        IGenericRepository<Comment> Comments { get; }
+        IGenericRepository<Like> Categories { get; }
+        IGenericRepository<Follow> Followers { get; }
         Task SaveAsync();
         void Save();
     }

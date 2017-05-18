@@ -14,14 +14,14 @@ namespace PhotoAlbum.DAL.Repositories
 
         public ApplicationUserManager UserManager { get; }
         public ApplicationRoleManager RoleManager { get; }
-        public IClientManager ClientManager { get; }
+        public IUserRepository UserRepository { get; }
 
         public IdentityUnitOfWork(string connectionString)
         {
             _db = new ApplicationContext(connectionString);
             UserManager = new ApplicationUserManager(new UserStore<ApplicationUser>(_db));
             RoleManager = new ApplicationRoleManager(new RoleStore<ApplicationRole>(_db));
-            ClientManager = new ClientManager(_db);
+            UserRepository = new UserRepository(_db);
         }
 
         public async Task SaveAsync()
@@ -44,7 +44,7 @@ namespace PhotoAlbum.DAL.Repositories
                 {
                     UserManager.Dispose();
                     RoleManager.Dispose();
-                    ClientManager.Dispose();
+                    UserRepository.Dispose();
                 }
                 this.disposed = true;
             }

@@ -7,7 +7,7 @@ namespace PhotoAlbum.DAL.Interfaces
     public interface IIdentityUnitOfWork:IDisposable
     {
         ApplicationUserManager UserManager { get; }
-        IClientManager ClientManager { get; }
+        IUserRepository UserRepository { get; }
         ApplicationRoleManager RoleManager { get; }
         Task SaveAsync();
     }

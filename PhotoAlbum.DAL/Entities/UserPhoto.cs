@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PhotoAlbum.DAL.Entities
 {
-    public class ClientPhoto
+    public class UserPhoto
     {
         [Key]
         public string Id { get; set; }
@@ -16,13 +16,13 @@ namespace PhotoAlbum.DAL.Entities
         public DateTime Date { get; set; }
         public string Description { get; set; }
 
-        public ClientPhoto()
+        public UserPhoto()
         {
             Comments = new List<Comment>();
             Likes = new List<Like>();
         }
 
-        public ClientProfile User { get; set; }
+        public UserProfile User { get; set; }
 
     }
 }

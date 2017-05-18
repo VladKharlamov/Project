@@ -21,24 +21,6 @@ namespace PhotoAlbum.BLL.Services
             _mapper = new MappingPhotoProfile(uow).Config.CreateMapper();
         }
 
-        public bool Like(LikeBLL likeBll)
-        {
-            if (likeBll == null)
-            {
-                throw new ArgumentNullException("Object cannot be null");
-            }
-            if (string.IsNullOrEmpty(GetLikeByUserToPhoto(likeBll.UserId, likeBll.PhotoId).Id))
-            {
-                AddLike(likeBll);
-                return true;
-            }
-            else
-            {
-                RemoveLike(likeBll);
-                return false;
-            }
-        }
-
         public LikeBLL GetLikeByUserToPhoto(string userId, string photoId)
         {
             var like = _db.Likes.Find(p => (p.User.Id == userId) && (p.Photo.Id == photoId)).SingleOrDefault();
@@ -72,7 +54,7 @@ namespace PhotoAlbum.BLL.Services
             {
                 Id = Guid.NewGuid().ToString(),
                 Photo = _db.Photos.Find(p => p.Id == likeBll.PhotoId).Single(),
-                User = _db.ClientManager.Find(p => p.Id == likeBll.UserId).Single()
+                User = _db.UserRepository.Find(p => p.Id == likeBll.UserId).Single()
             });
             _db.Save();
         }

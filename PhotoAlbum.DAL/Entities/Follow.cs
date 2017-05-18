@@ -7,8 +7,8 @@ namespace PhotoAlbum.DAL.Entities
         [Key]
         public string Id { get; set; }
 
-        public ClientProfile User { get; set; }
-        public ClientProfile Follower { get; set; }
+        public UserProfile User { get; set; }
+        public UserProfile Follower { get; set; }
 
     }
 }

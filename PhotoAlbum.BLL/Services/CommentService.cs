@@ -36,7 +36,7 @@ namespace PhotoAlbum.BLL.Services
                 Id = Guid.NewGuid().ToString(),
                 Message = commentBll.Message,
                 Photo = _db.Photos.Find(p => p.Id == commentBll.PhotoId).Single(),
-                User = _db.ClientManager.Find(p => p.Id == commentBll.UserId).Single(),
+                User = _db.UserRepository.Find(p => p.Id == commentBll.UserId).Single(),
                 Date = DateTime.Now
             });
 
@@ -76,10 +76,10 @@ namespace PhotoAlbum.BLL.Services
             comment.Id = commentBll.Id;
             comment.Message = commentBll.Message;
             comment.Photo = _db.Photos.Get(commentBll.PhotoId);
-            comment.User = _db.ClientManager.Get(commentBll.UserId);
+            comment.User = _db.UserRepository.Get(commentBll.UserId);
 
             _db.Comments.Update(comment);
-            _db.SaveAsync();
+            _db.Save();
         }
 
         public void RemoveComment(CommentBLL commentBll)
@@ -90,7 +90,7 @@ namespace PhotoAlbum.BLL.Services
             }
             var comment = _db.Comments.Find(p => p.Id == commentBll.Id).Single();
             _db.Comments.Remove(comment);
-            _db.SaveAsync();
+            _db.Save();
 
         }
     }

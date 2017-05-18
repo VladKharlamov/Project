@@ -37,13 +37,13 @@ namespace PhotoAlbum.BLL.Services
 
                 await _db.UserManager.AddToRoleAsync(user.Id, userBll.Role);
 
-                ClientProfile clientProfile = new ClientProfile
+                UserProfile userProfile = new UserProfile
                 {
                     Id = user.Id,
                     Birthday = userBll.Birthday,
                     Name = userBll.Name
                 };
-                _db.ClientManager.Create(clientProfile);
+                _db.UserRepository.Create(userProfile);
                 await _db.SaveAsync();
                 return new OperationDetails(true, "The registration was successful", "");
             }
@@ -60,14 +60,14 @@ namespace PhotoAlbum.BLL.Services
             {
                 claim = _db.UserManager.CreateIdentity(user,
                                             DefaultAuthenticationTypes.ApplicationCookie);
-                claim.AddClaim(new Claim("Name", user.ClientProfile.Name));
+                claim.AddClaim(new Claim("Name", user.UserProfile.Name));
             }
             return claim;
         }
 
         public IEnumerable<UserBLL> GetAllUsers()
         {
-            return _db.ClientManager.GetAll().Select(_mapper.Map<ClientProfile, UserBLL>);
+            return _db.UserRepository.GetAll().Select(_mapper.Map<UserProfile, UserBLL>);
         }
 
         public async Task SetInitialData(UserBLL adminBll, List<string> roles)
@@ -91,7 +91,7 @@ namespace PhotoAlbum.BLL.Services
 
         public UserBLL GetUser(string id)
         {
-            return _mapper.Map<ClientProfile, UserBLL>(_db.ClientManager.Get(id));
+            return _mapper.Map<UserProfile, UserBLL>(_db.UserRepository.Get(id));
         }
 
         public OperationDetails ChangePassword(string id, string currentPassword, string newPassword)
@@ -130,7 +130,7 @@ namespace PhotoAlbum.BLL.Services
                 throw new ArgumentNullException("Object cannot be null");
             }
 
-            var user = _db.ClientManager.Find(p => p.Id == userBll.Id).Single();
+            var user = _db.UserRepository.Find(p => p.Id == userBll.Id).Single();
             if (newRole == "admin" || newRole == "moderator" || newRole == "user")
             {
                 _db.UserManager.RemoveFromRole(user.Id, userBll.Role);
@@ -150,7 +150,7 @@ namespace PhotoAlbum.BLL.Services
             {
                 throw new ArgumentException("Name can't be empty");
             }
-            var user = _db.ClientManager.Find(p => p.Id == userBll.Id).Single();
+            var user = _db.UserRepository.Find(p => p.Id == userBll.Id).Single();
             user.Id = userBll.Id;
             user.Name = userBll.Name;
             user.Birthday = userBll.Birthday;
@@ -162,7 +162,7 @@ namespace PhotoAlbum.BLL.Services
 
             //    user.Role = _db.RoleManager.FindById(userBll.ApplicationUser.Roles.First(p2=>p2.UserId==userBll.Id).RoleId).Name;
 
-            _db.ClientManager.Update(user);
+            _db.UserRepository.Update(user);
 
 
             _db.SaveAsync();
@@ -194,8 +194,8 @@ namespace PhotoAlbum.BLL.Services
             {
                 userDto = new UserBLL
                 {
-                    Name = user.ClientProfile.Name,
-                    Birthday = user.ClientProfile.Birthday,
+                    Name = user.UserProfile.Name,
+                    Birthday = user.UserProfile.Birthday,
                     Email = user.Email,
                 };
             }

@@ -9,28 +9,28 @@ namespace PhotoAlbum.DAL.Repositories
     public class PhotoUnitOfWork : IPhotoUnitOfWork
     {
         private readonly ApplicationContext _db;
-        public IClientManager ClientManager { get; }
+        public IUserRepository UserRepository { get; }
 
-        public IRepository<ClientPhoto> Photos { get; }
+        public IGenericRepository<UserPhoto> Photos { get; }
 
-        public IRepository<Like> Likes { get; }
+        public IGenericRepository<Like> Likes { get; }
 
-        public IRepository<Comment> Comments { get; }
+        public IGenericRepository<Comment> Comments { get; }
 
-        public IRepository<Like> Categories { get; }
+        public IGenericRepository<Like> Categories { get; }
 
-        public IRepository<Follow> Followers { get; }
+        public IGenericRepository<Follow> Followers { get; }
 
 
         public PhotoUnitOfWork(string connectionString)
         {
             _db = new ApplicationContext(connectionString);
-            ClientManager = new ClientManager(_db);
-            Photos = new Repository<ClientPhoto>(_db);
-            Comments = new Repository<Comment>(_db);
-            Likes = new Repository<Like>(_db);
-            Categories = new Repository<Like>(_db);
-            Followers = new Repository<Follow>(_db);
+            UserRepository = new UserRepository(_db);
+            Photos = new GenericGenericRepository<UserPhoto>(_db);
+            Comments = new GenericGenericRepository<Comment>(_db);
+            Likes = new GenericGenericRepository<Like>(_db);
+            Categories = new GenericGenericRepository<Like>(_db);
+            Followers = new GenericGenericRepository<Follow>(_db);
         }
 
         #region Dispose

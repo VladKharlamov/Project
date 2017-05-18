@@ -4,6 +4,7 @@ namespace PhotoAlbum.DAL.Entities
 {
     public class ApplicationUser : IdentityUser
     {
-        public  virtual ClientProfile ClientProfile { get; set; }
+        public  virtual UserProfile UserProfile { get; set; }
+
     }
 }

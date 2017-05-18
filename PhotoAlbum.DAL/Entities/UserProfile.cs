@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PhotoAlbum.DAL.Entities
 {
-    public class ClientProfile
+    public class UserProfile
     {
         [Key]
         [ForeignKey("ApplicationUser")]
@@ -15,16 +15,16 @@ namespace PhotoAlbum.DAL.Entities
 
         public DateTime Birthday { get; set; }
 
-        public ICollection<Follow> Subcribes { get; set; }
+        public ICollection<Follow> Followers { get; set; }
         public ICollection<Like> Likes { get; set; }
         public ICollection<Comment> Comments { get; set; }
-        public ICollection<ClientPhoto> Photos { get; set; }
+        public ICollection<UserPhoto> Photos { get; set; }
 
-        public ClientProfile()
+        public UserProfile()
         {
-            Photos = new List<ClientPhoto>();
+            Photos = new List<UserPhoto>();
             Likes = new List<Like>();
-            Subcribes = new List<Follow>();
+            Followers = new List<Follow>();
             Comments = new List<Comment>();
         }
 

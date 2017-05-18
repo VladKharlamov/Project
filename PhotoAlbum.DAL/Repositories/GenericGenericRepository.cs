@@ -8,11 +8,11 @@ using PhotoAlbum.DAL.Interfaces;
 
 namespace PhotoAlbum.DAL.Repositories
 {
-    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
+    public class GenericGenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
         protected readonly DbContext Context;
 
-        public Repository(DbContext context)
+        public GenericGenericRepository(DbContext context)
         {
             Context = context;
         }

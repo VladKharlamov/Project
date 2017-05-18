@@ -31,8 +31,8 @@ namespace PhotoAlbum.BLL.Services
             _db.Followers.Add(new Follow()
             {
                 Id = Guid.NewGuid().ToString(),
-                Follower = _db.ClientManager.Find(p => p.Id == followBll.FollowerId).Single(),
-                User = _db.ClientManager.Find(p => p.Id == followBll.UserId).Single()
+                Follower = _db.UserRepository.Find(p => p.Id == followBll.FollowerId).Single(),
+                User = _db.UserRepository.Find(p => p.Id == followBll.UserId).Single()
             });
 
             _db.Save();

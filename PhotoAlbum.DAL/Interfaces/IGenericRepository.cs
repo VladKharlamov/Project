@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace PhotoAlbum.DAL.Interfaces
 {
-    public interface IRepository<TEntity> where TEntity : class
+    public interface IGenericRepository<TEntity> where TEntity : class
     {
         TEntity Get(string id);
         IEnumerable<TEntity> GetAll();

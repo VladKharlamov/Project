@@ -15,9 +15,9 @@ namespace PhotoAlbum.BLL.Infrastructure
 
                 Config = new MapperConfiguration(cfg =>
                 {
-                    cfg.CreateMap<ClientPhoto, UserPhotoBLL>()
+                    cfg.CreateMap<UserPhoto, UserPhotoBLL>()
                         .ForMember(dto => dto.UserId, m => m.MapFrom(cp => cp.User.Id));
-    //                cfg.CreateMap<ClientProfile, UserBLL>()
+    //                cfg.CreateMap<UserProfile, UserBLL>()
     //.ForMember(dto => dto.Avatar, m => m.MapFrom(cp => cp.Photos.FirstOrDefault(p=>p.PhotoAddress).PhotoAddress));
 
                     cfg.CreateMap<Like, LikeBLL>()

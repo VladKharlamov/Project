@@ -17,13 +17,13 @@ namespace PhotoAlbum.BLL.Infrastructure
 
             Config = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<ClientProfile, UserBLL>()
+                cfg.CreateMap<UserProfile, UserBLL>()
                     .ForMember(dto => dto.Email, m => m.MapFrom(cp => cp.ApplicationUser.Email))
                     .ForMember(dto => dto.Password, m => m.MapFrom(cp => cp.ApplicationUser.PasswordHash))
                     .ForMember(dto => dto.UserName, m => m.MapFrom(cp => cp.ApplicationUser.UserName))
                                         .ForMember(dto => dto.Birthday, m => m.MapFrom(cp => cp.Birthday.Date))
 
-                    //.ForMember(dto => dto.Avatar, m => m.MapFrom(cp => uow.ClientManager
+                    //.ForMember(dto => dto.Avatar, m => m.MapFrom(cp => uow.UserRepository
                     //.Find(p=>p.Photos.Where(p0 => p0.IsAvatar == true)
                     //.Select(p1=>p1.PhotoAddress)
                     //.FirstOrDefault())))

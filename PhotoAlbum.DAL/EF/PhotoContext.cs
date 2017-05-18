@@ -10,7 +10,7 @@
 //{
 //    class PhotoContext : DbContext
 //    {
-//        public DbSet<ClientPhoto> ClientPhotos { get; set; }
+//        public DbSet<UserPhoto> UserPhotos { get; set; }
 //        public DbSet<Comment> Comments { get; set; }
 //        public DbSet<Like> Likes { get; set; }
 //        public DbSet<Follow> Followers { get; set; }
