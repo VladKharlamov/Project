@@ -211,7 +211,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="404.html" />
+    <Content Include="App_Data\PhotoAlbum.mdf" />
+    <Content Include="App_Data\PhotoAlbum_log.ldf">
+      <DependentUpon>PhotoAlbum.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap-datepicker.css" />
     <Content Include="Content\bootstrap-datepicker3.css" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -341,7 +344,6 @@
     <Content Include="Views\Error\Forbidden.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Content\UserPhotos\" />
   </ItemGroup>
   <ItemGroup>

@@ -13,7 +13,5 @@ namespace PhotoAlbum.WEB.Models
 
         public string UserId { get; set; }
         public DateTime Date { get; set; }
-
-
     }
 }

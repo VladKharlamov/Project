@@ -314,7 +314,7 @@ namespace PhotoAlbum.WEB.Controllers
                 UserName = "admin",
                 Email = "harlamowlad@gmail.com",
                 Password = "11111111",
-                Name = "Kharlamov Vladyslav",
+                Name = "Vladyslav",
                 Birthday = DateTime.Parse("10/15/1995").Date,
                 Role = "admin"
             }, new List<string> { "user", "admin", "moderator" });

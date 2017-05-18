@@ -2,10 +2,6 @@
     word-break: break-all;
 }
 
-.img-wrapper:hover .img-set {
-    bottom: 0;
-}
-
 .images-list {
     padding-bottom: 30px;
 }
@@ -63,17 +59,6 @@
 .image-item-wrapper:hover .image-item-set {
     transform: scale(1);
     opacity: 1;
-}
-
-.load-more-wrapper {
-    padding-top: 10px;
-}
-
-.load-more-wrapper .btn {
-    padding-left: 5%;
-    padding-right: 5%;
-    background-color: #3897f0;
-    color: #FFF;
 }
 
 .btn.btn-follow {

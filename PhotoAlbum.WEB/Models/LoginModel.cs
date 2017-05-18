@@ -4,7 +4,7 @@ namespace PhotoAlbum.WEB.Models
 {
     public class LoginModel
     {
-        [Required]
+        [Required(ErrorMessage = "The field cann`t be empty")]
         [EmailAddress]
         public string Email { get; set; }
         [Required]
