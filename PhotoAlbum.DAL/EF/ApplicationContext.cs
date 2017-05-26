@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration;
 using Microsoft.AspNet.Identity.EntityFramework;
 using PhotoAlbum.DAL.Entities;
 

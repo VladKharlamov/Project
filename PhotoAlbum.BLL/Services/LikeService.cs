@@ -7,6 +7,7 @@ using PhotoAlbum.BLL.Infrastructure;
 using PhotoAlbum.BLL.Interfaces;
 using PhotoAlbum.DAL.Entities;
 using PhotoAlbum.DAL.Interfaces;
+using System.Data.Entity;
 
 namespace PhotoAlbum.BLL.Services
 {

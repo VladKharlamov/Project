@@ -10,5 +10,6 @@ namespace PhotoAlbum.DAL.Interfaces
         IUserRepository UserRepository { get; }
         ApplicationRoleManager RoleManager { get; }
         Task SaveAsync();
+        void Save();
     }
 }

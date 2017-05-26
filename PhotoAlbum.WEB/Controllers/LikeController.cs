@@ -2,22 +2,27 @@
 using System.Linq;
 using System.Web.Mvc;
 using AutoMapper;
+using Microsoft.AspNet.Identity;
 using PhotoAlbum.BLL.EnittyBLL;
 using PhotoAlbum.BLL.Interfaces;
+using PhotoAlbum.BLL.Services;
 using PhotoAlbum.WEB.Models;
 
 namespace PhotoAlbum.WEB.Controllers
 {
     public class LikeController : Controller
     {
-        private int PageSize = 5;
+        private int PageSize = 12;
         private IMapper _mapper;
 
-        public LikeController(ILikeService likeService)
+        public LikeController(ILikeService likeService, IPhotoService photoService)
         {
             _mapper = new MappingMVCProfile().Config.CreateMapper();
             _likeService = likeService;
+            _photoService = photoService;
         }
+
+        private IPhotoService _photoService;
 
         private ILikeService _likeService;
 
@@ -70,6 +75,27 @@ namespace PhotoAlbum.WEB.Controllers
         {
 
             return _likeService.GetCountLikesByPhoto(photoid);
+        }
+
+        public ActionResult GetMyLikes(int page=1)
+        {
+            var likes = _likeService.GetAllLikesByUser(User.Identity.GetUserId());
+            List<UserPhotoBLL> photosBySearch = new List<UserPhotoBLL>();
+            foreach (var item in likes)
+            {
+               photosBySearch.AddRange(_photoService.GetPhotos().Where(p => p.Id == item.PhotoId));
+            }
+            PhotoPageViewModel model = new PhotoPageViewModel()
+            {
+                UserPhotos = photosBySearch.Select(_mapper.Map<UserPhotoBLL, UserPhotoModel>).OrderByDescending(p => p.Date).Skip((page - 1) * PageSize).Take(PageSize).ToList(),
+                PagingInfo = new PagingInfo()
+                {
+                    CurrentPage = page,
+                    ItemsPerPage = PageSize,
+                    TotalItems = photosBySearch.Count()
+                }
+            };
+            return View(model);
         }
     }
 }

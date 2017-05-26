@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PhotoAlbum.DAL.Entities
 {
+
     public class UserPhoto
     {
         [Key]

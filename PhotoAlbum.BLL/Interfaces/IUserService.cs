@@ -18,7 +18,7 @@ namespace PhotoAlbum.BLL.Interfaces
         IEnumerable<UserBLL> GetAllUsers();
         UserBLL GetUser(string id);
         void EditUser(UserBLL userBll);
-        Task<OperationDetails> RemoveUser(UserBLL userBll);
+        Task<OperationDetails> RemoveUser(string userId);
         UserBLL GetUserByEmail(string email);
 
     }

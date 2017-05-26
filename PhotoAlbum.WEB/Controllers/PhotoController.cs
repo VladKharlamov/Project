@@ -18,10 +18,11 @@ namespace PhotoAlbum.WEB.Controllers
     {
         private int PageSize = 12;
         private IMapper _mapper;
-        public PhotoController(IPhotoService photoService)
+        public PhotoController(IPhotoService photoService, ILikeService likeService)
         {
             _mapper = new MappingMVCProfile().Config.CreateMapper();
-            PhotoService = photoService;
+            _photoService = photoService;
+            _likeService = likeService;
         }
         private IUserService UserService
         {
@@ -30,7 +31,9 @@ namespace PhotoAlbum.WEB.Controllers
                 return HttpContext.GetOwinContext().GetUserManager<IUserService>();
             }
         }
-        private IPhotoService PhotoService;
+        private IPhotoService _photoService;
+        private ILikeService _likeService;
+
 
         public ActionResult Photos(string id = null, int page = 1)
         {
@@ -40,7 +43,7 @@ namespace PhotoAlbum.WEB.Controllers
                return new HttpNotFoundResult();
             }
 
-            IEnumerable<UserPhotoBLL> photosByUser = PhotoService.GetPhotosByUser(id);
+            IEnumerable<UserPhotoBLL> photosByUser = _photoService.GetPhotosByUser(id);
             PhotoPageViewModel model = new PhotoPageViewModel()
             {
                 UserPhotos = photosByUser.Select(_mapper.Map<UserPhotoBLL, UserPhotoModel>).OrderByDescending(p => p.Date).Skip((page - 1) * PageSize).Take(PageSize).ToList(),
@@ -56,7 +59,7 @@ namespace PhotoAlbum.WEB.Controllers
         }
         public ActionResult Search(string @string, int page = 1)
         {
-            IEnumerable<UserPhotoBLL> photosBySearch = PhotoService.GetPhotosBySearch(@string);
+            IEnumerable<UserPhotoBLL> photosBySearch = _photoService.GetPhotosBySearch(@string);
             PhotoPageViewModel model = new PhotoPageViewModel()
             {
                 UserPhotos = photosBySearch.Select(_mapper.Map<UserPhotoBLL, UserPhotoModel>).OrderByDescending(p => p.Date).Skip((page - 1) * PageSize).Take(PageSize).ToList(),
@@ -88,7 +91,7 @@ namespace PhotoAlbum.WEB.Controllers
                     string address = Server.MapPath("/Content/UserPhotos/" + User.Identity.GetUserId() + "/" + Guid.NewGuid().ToString() + "." + upload.FileName.Substring(upload.FileName.LastIndexOf(".") + 1));
                     upload.SaveAs(address);
 
-                    PhotoService.AddPhoto(new UserPhotoBLL()
+                    _photoService.AddPhoto(new UserPhotoBLL()
                     {
                         PhotoAddress = @"\" + address.Replace(Request.PhysicalApplicationPath, String.Empty),
                         UserId = User.Identity.GetUserId(),
@@ -114,7 +117,7 @@ namespace PhotoAlbum.WEB.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var photo = PhotoService.GetPhoto(id);
+            var photo = _photoService.GetPhoto(id);
             if (photo == null)
             {
                 return HttpNotFound();
@@ -127,9 +130,9 @@ namespace PhotoAlbum.WEB.Controllers
         public ActionResult Delete(UserPhotoModel photo)
         {
 
-            var photoModel = PhotoService.GetPhoto(photo.Id);
+            var photoModel = _photoService.GetPhoto(photo.Id);
 
-            PhotoService.RemovePhoto(new UserPhotoBLL()
+            _photoService.RemovePhoto(new UserPhotoBLL()
             {
                 Id = photo.Id,
             });
@@ -143,7 +146,7 @@ namespace PhotoAlbum.WEB.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var photo = PhotoService.GetPhoto(id);
+            var photo = _photoService.GetPhoto(id);
             if (photo == null)
             {
                 return HttpNotFound();
@@ -157,7 +160,7 @@ namespace PhotoAlbum.WEB.Controllers
         {
             try
             {
-                PhotoService.EditPhoto(new UserPhotoBLL()
+                _photoService.EditPhoto(new UserPhotoBLL()
                 {
                     Id = photo.Id,
                     IsAvatar = true
@@ -176,7 +179,7 @@ namespace PhotoAlbum.WEB.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var photo = PhotoService.GetPhoto(id);
+            var photo = _photoService.GetPhoto(id);
             if (photo == null)
             {
                 return HttpNotFound();
@@ -191,7 +194,7 @@ namespace PhotoAlbum.WEB.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var photo = PhotoService.GetPhoto(id);
+            var photo = _photoService.GetPhoto(id);
             if (photo == null)
             {
                 return HttpNotFound();
@@ -207,7 +210,7 @@ namespace PhotoAlbum.WEB.Controllers
             {
                 if (!string.IsNullOrEmpty(photo.Description))
                 {
-                    PhotoService.EditPhoto(new UserPhotoBLL()
+                    _photoService.EditPhoto(new UserPhotoBLL()
                     {
                         Id = photo.Id,
                         Description = photo.Description

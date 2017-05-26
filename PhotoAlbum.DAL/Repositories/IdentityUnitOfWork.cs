@@ -28,7 +28,10 @@ namespace PhotoAlbum.DAL.Repositories
         {
             await _db.SaveChangesAsync();
         }
-
+        public void Save()
+        {
+            _db.SaveChanges();
+        }
         public void Dispose()
         {
             Dispose(true);

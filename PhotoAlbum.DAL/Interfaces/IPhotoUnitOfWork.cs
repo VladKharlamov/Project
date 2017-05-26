@@ -10,7 +10,6 @@ namespace PhotoAlbum.DAL.Interfaces
         IGenericRepository<UserPhoto> Photos { get; }
         IGenericRepository<Like> Likes { get; }
         IGenericRepository<Comment> Comments { get; }
-        IGenericRepository<Like> Categories { get; }
         IGenericRepository<Follow> Followers { get; }
         Task SaveAsync();
         void Save();

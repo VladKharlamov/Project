@@ -180,9 +180,9 @@ namespace PhotoAlbum.WEB.Controllers
         {
             if (user == null)
                 return HttpNotFound();
-            var userbll = UserService.GetUserByEmail(user.Email);
+           
 
-            UserService.RemoveUser(userbll);
+            UserService.RemoveUser(user.Id);
 
             return RedirectToAction("UserManagement");
         }

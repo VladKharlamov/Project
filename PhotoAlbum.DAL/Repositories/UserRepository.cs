@@ -21,7 +21,6 @@ namespace PhotoAlbum.DAL.Repositories
         public void Create(UserProfile item)
         {
             Context.UserProfiles.Add(item);
-            Context.SaveChanges();
         }
 
         public UserProfile Get(string id)

@@ -17,8 +17,6 @@ namespace PhotoAlbum.DAL.Repositories
 
         public IGenericRepository<Comment> Comments { get; }
 
-        public IGenericRepository<Like> Categories { get; }
-
         public IGenericRepository<Follow> Followers { get; }
 
 
@@ -29,7 +27,6 @@ namespace PhotoAlbum.DAL.Repositories
             Photos = new GenericGenericRepository<UserPhoto>(_db);
             Comments = new GenericGenericRepository<Comment>(_db);
             Likes = new GenericGenericRepository<Like>(_db);
-            Categories = new GenericGenericRepository<Like>(_db);
             Followers = new GenericGenericRepository<Follow>(_db);
         }
 

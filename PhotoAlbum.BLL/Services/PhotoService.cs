@@ -84,8 +84,25 @@ namespace PhotoAlbum.BLL.Services
                 throw new ArgumentNullException("Object cannot be null");
             }
             var photo = _db.Photos.Find(p => p.Id == userPhotoBll.Id).Single();
+            var likes = _db.Likes.Find(p => p.Photo.Id == userPhotoBll.Id);
+            var comments = _db.Comments.Find(p => p.Photo.Id == userPhotoBll.Id);
+
+            _db.Comments.RemoveRange(comments);
+            _db.Likes.RemoveRange(likes);
             _db.Photos.Remove(photo);
             _db.Save();
         }
+
+        public void RemoveAll(UserPhotoBLL userPhotoBll)
+        {
+            var photos = _db.Photos.Find(p => p.Id == userPhotoBll.Id);
+            var likes = _db.Likes.Find(p => p.Photo.Id == userPhotoBll.Id);
+            var comments = _db.Comments.Find(p => p.Photo.Id == userPhotoBll.Id);
+
+            _db.Comments.RemoveRange(comments);
+            _db.Likes.RemoveRange(likes);
+            _db.Photos.RemoveRange(photos);
+        }
+
     }
 }

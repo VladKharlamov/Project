@@ -10,6 +10,7 @@ using PhotoAlbum.BLL.Infrastructure;
 using PhotoAlbum.BLL.Interfaces;
 using PhotoAlbum.DAL.Entities;
 using PhotoAlbum.DAL.Interfaces;
+using PhotoAlbum.DAL.Repositories;
 
 namespace PhotoAlbum.BLL.Services
 {
@@ -203,19 +204,20 @@ namespace PhotoAlbum.BLL.Services
             return userDto;
         }
 
-        public async Task<OperationDetails> RemoveUser(UserBLL userBll)
+        public async Task<OperationDetails> RemoveUser(string userId)
         {
-            ApplicationUser user = _db.UserManager.Users.FirstOrDefault(u => u.Email == userBll.Email);
+            ApplicationUser user = _db.UserManager.Users.FirstOrDefault(u => u.Id == userId);
 
-            if (userBll == null)
+            if (user == null)
             {
                 return new OperationDetails(succedeed: false,
                         message: "User not found", prop: "");
             }
-            var result = await _db.UserManager.DeleteAsync(user);
+            
+            var result = _db.UserManager.Delete(user);
             if (result.Succeeded)
             {
-                await _db.SaveAsync();
+                _db.Save();
                 return new OperationDetails(succedeed: true,
                     message: "The user has been successfully deleted", prop: "");
             }

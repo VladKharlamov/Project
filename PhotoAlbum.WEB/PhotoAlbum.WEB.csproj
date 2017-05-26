@@ -197,6 +197,7 @@
     </Compile>
     <Compile Include="HTMLHelpers\PagingHelpers.cs" />
     <Compile Include="Models\CommentModel.cs" />
+    <Compile Include="Models\MyLikeModel.cs" />
     <Compile Include="Models\LikeModel.cs" />
     <Compile Include="Models\CommentPageViewModel.cs" />
     <Compile Include="Models\FollowModel.cs" />
@@ -211,10 +212,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\PhotoAlbum.mdf" />
-    <Content Include="App_Data\PhotoAlbum_log.ldf">
-      <DependentUpon>PhotoAlbum.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\bootstrap-datepicker.css" />
     <Content Include="Content\bootstrap-datepicker3.css" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -342,8 +339,10 @@
     <Content Include="Views\Photo\Edit.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Error\Forbidden.cshtml" />
+    <Content Include="Views\Like\GetMyLikes.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\" />
     <Folder Include="Content\UserPhotos\" />
   </ItemGroup>
   <ItemGroup>
