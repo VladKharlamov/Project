@@ -21,8 +21,8 @@ namespace PhotoAlbum.BLL.Infrastructure
     //.ForMember(dto => dto.Avatar, m => m.MapFrom(cp => cp.Photos.FirstOrDefault(p=>p.PhotoAddress).PhotoAddress));
 
                     cfg.CreateMap<Like, LikeBLL>()
-                    .ForMember(dto => dto.UserId, m => m.MapFrom(cp => cp.User.Id))
-                    .ForMember(dto => dto.PhotoId, m => m.MapFrom(cp => cp.Photo.Id));
+                    .ForMember(dto => dto.UserId, m => m.MapFrom(cp => cp.UserId))
+                    .ForMember(dto => dto.PhotoId, m => m.MapFrom(cp => cp.PhotoId));
 
                     cfg.CreateMap<Follow, FollowBLL>()
                         .ForMember(dto => dto.UserId, m => m.MapFrom(cp => cp.User.Id))

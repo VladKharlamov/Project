@@ -9,6 +9,9 @@ namespace PhotoAlbum.DAL.Entities
 
         public UserProfile User { get; set; }
         public UserProfile Follower { get; set; }
+        public string FollowerId { get; set; }
+
+        public string UserId { get; set; }
 
     }
 }

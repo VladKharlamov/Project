@@ -10,6 +10,10 @@ namespace PhotoAlbum.DAL.Entities
         public UserPhoto Photo { get; set; }
 
         public UserProfile User { get; set; }
+        public string PhotoId { get; set; }
+
+        public string UserId { get; set; }
+
     }
 
 }

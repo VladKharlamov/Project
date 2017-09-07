@@ -7,7 +7,7 @@ namespace PhotoAlbum.DAL.EF
 {
     class ApplicationContext:IdentityDbContext<ApplicationUser>
     {
-        public ApplicationContext(string conectionString) : base(conectionString) { }
+        public ApplicationContext(string connectionString) : base(connectionString) { }
         public DbSet<UserProfile> UserProfiles { get; set; }
 
         public DbSet<UserPhoto> UserPhotos { get; set; }

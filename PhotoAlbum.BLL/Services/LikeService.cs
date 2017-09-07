@@ -24,24 +24,24 @@ namespace PhotoAlbum.BLL.Services
 
         public LikeBLL GetLikeByUserToPhoto(string userId, string photoId)
         {
-            var like = _db.Likes.Find(p => (p.User.Id == userId) && (p.Photo.Id == photoId)).SingleOrDefault();
+            var like = _db.Likes.Find(p => (p.UserId == userId) && (p.PhotoId == photoId)).SingleOrDefault();
             return _mapper.Map<Like, LikeBLL>(like);
         }
 
         public IEnumerable<LikeBLL> GetAllLikesByUser(string userId)
         {
-            var likes = _db.Likes.Find(p => p.User.Id == userId);
+            var likes = _db.Likes.Find(p => p.UserId == userId);
             return _mapper.Map<IEnumerable<Like>, IEnumerable<LikeBLL>>(likes);
         }
 
         public IEnumerable<LikeBLL> GetLikesByPhoto(string photoId)
         {
-            var likes = _db.Likes.Find(p => p.Photo.Id == photoId);
+            var likes = _db.Likes.Find(p => p.PhotoId == photoId);
             return _mapper.Map<IEnumerable<Like>, IEnumerable<LikeBLL>>(likes);
         }
         public int GetCountLikesByPhoto(string photoId)
         {
-            var likes = _db.Likes.Find(p => p.Photo.Id == photoId);
+            var likes = _db.Likes.Find(p => p.PhotoId == photoId);
             return likes.Count();
         }
 

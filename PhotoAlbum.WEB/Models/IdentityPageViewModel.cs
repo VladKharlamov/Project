@@ -6,6 +6,5 @@ namespace PhotoAlbum.WEB.Models
     {
         public IEnumerable<UserModel> Users { get; set; }
         public PagingInfo PagingInfo { get; set; }
-
     }
 }

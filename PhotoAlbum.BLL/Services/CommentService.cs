@@ -50,13 +50,13 @@ namespace PhotoAlbum.BLL.Services
 
         public IEnumerable<CommentBLL> GetCommentsByPhoto(string photoId)
         {
-            var comments = _db.Comments.Find(p => p.Photo.Id == photoId).OrderBy(x=>x.Date);
+            var comments = _db.Comments.Find(p => p.PhotoId == photoId).OrderBy(x=>x.Date);
             return _mapper.Map<IEnumerable<Comment>, IEnumerable<CommentBLL>>(comments);
         }
 
         public IEnumerable<CommentBLL> GetCommentsByUser(string userId)
         {
-            var comments = _db.Comments.Find(p => p.User.Id == userId).OrderBy(x => x.Date);
+            var comments = _db.Comments.Find(p => p.UserId == userId).OrderBy(x => x.Date);
             return _mapper.Map<IEnumerable<Comment>, IEnumerable<CommentBLL>>(comments);
         }
 

@@ -7,6 +7,5 @@ namespace PhotoAlbum.WEB.Models
     {
         public IEnumerable<CommentModel> Comments { get; set; }
         public PagingInfo PagingInfo { get; set; }
-
     }
 }

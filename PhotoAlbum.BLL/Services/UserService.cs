@@ -10,7 +10,6 @@ using PhotoAlbum.BLL.Infrastructure;
 using PhotoAlbum.BLL.Interfaces;
 using PhotoAlbum.DAL.Entities;
 using PhotoAlbum.DAL.Interfaces;
-using PhotoAlbum.DAL.Repositories;
 
 namespace PhotoAlbum.BLL.Services
 {
@@ -101,29 +100,16 @@ namespace PhotoAlbum.BLL.Services
             {
                 _db.UserManager.ChangePassword(id, currentPassword, newPassword);
                 _db.SaveAsync();
-                return new OperationDetails(true, "Пароль успешно изменен", "");
+                return new OperationDetails(true, "Password changed successfully", "");
 
             }
             catch (Exception e)
             {
-                return new OperationDetails(false, "Проверьте введенные данные", "");
+                return new OperationDetails(false, "Check the entered data", "");
             }
         }
 
-        //public OperationDetails ConfirmPasswordEmail( string currentPassword, string newPassword)
-        //{
-        //    try
-        //    {
 
-        //        _db.SaveAsync();
-        //        return new OperationDetails(true, "Пароль успешно изменен", "");
-
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return new OperationDetails(false, "Проверьте введенные данные", "");
-        //    }
-        //}
         public void ChangeRole(UserBLL userBll, string newRole)
         {
             if (userBll == null)

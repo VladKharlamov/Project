@@ -20,6 +20,5 @@ namespace PhotoAlbum.BLL.Interfaces
         void EditUser(UserBLL userBll);
         Task<OperationDetails> RemoveUser(string userId);
         UserBLL GetUserByEmail(string email);
-
     }
 }

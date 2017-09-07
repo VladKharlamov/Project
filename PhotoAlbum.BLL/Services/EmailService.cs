@@ -25,7 +25,7 @@ namespace PhotoAlbum.BLL.Services
         {
             var emailMessage = new MimeMessage();
 
-            emailMessage.From.Add(new MailboxAddress("Администрация сайта", ConfigurationManager.AppSettings["login"]));
+            emailMessage.From.Add(new MailboxAddress("Site administration", ConfigurationManager.AppSettings["login"]));
             emailMessage.To.Add(new MailboxAddress("", email));
             emailMessage.Subject = subject;
             emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html)
@@ -70,9 +70,9 @@ namespace PhotoAlbum.BLL.Services
                 return new OperationDetails(false, "User not found", "");
             }
             if(await Database.UserManager.IsEmailConfirmedAsync(user.Id))
-            return new OperationDetails(true, "Успех", "");
+            return new OperationDetails(true, "Success", "");
             else
-                return new OperationDetails(false, "Вы не подтвердили свой email", "");
+                return new OperationDetails(false, "You don`t confirm your email", "");
         }
         public void Dispose()
         {

@@ -60,11 +60,11 @@ namespace PhotoAlbum.WEB.Controllers
         }
 
         [HttpPost]
-        public ActionResult DeleteFollower(FollowModel comment)
+        public ActionResult DeleteFollower(FollowModel follower)
         {
             _followService.RemoveFollower(new FollowBLL()
             {
-                Id = comment.Id,
+                Id = follower.Id,
             });
 
             return View();

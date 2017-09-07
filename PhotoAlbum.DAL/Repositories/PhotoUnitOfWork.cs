@@ -59,8 +59,5 @@ namespace PhotoAlbum.DAL.Repositories
             _db.SaveChanges();
         }
         #endregion
-
-
-
     }
 }

@@ -44,18 +44,18 @@ namespace PhotoAlbum.BLL.Services
         }
         public FollowBLL GetFollowerByUser(string userId, string followerId)
         {
-            var follow = _db.Followers.Find(p => (p.User.Id == userId) && (p.Follower.Id == followerId)).SingleOrDefault();
+            var follow = _db.Followers.Find(p => (p.UserId == userId) && (p.FollowerId == followerId)).SingleOrDefault();
             return _mapper.Map<Follow, FollowBLL>(follow);
         }
         public IEnumerable<FollowBLL> GetFollowersByUser(string userId)
         {
-            var subcribers = _db.Followers.Find(p => p.User.Id == userId);
+            var subcribers = _db.Followers.Find(p => p.UserId == userId);
             return _mapper.Map<IEnumerable<Follow>, IEnumerable<FollowBLL>>(subcribers);
         }
 
         public IEnumerable<FollowBLL> GetUsersByFollower(string subcriberId)
         {
-            var subcribers = _db.Followers.Find(p => p.User.Id == subcriberId);
+            var subcribers = _db.Followers.Find(p => p.UserId == subcriberId);
             return _mapper.Map<IEnumerable<Follow>, IEnumerable<FollowBLL>>(subcribers);
         }
 

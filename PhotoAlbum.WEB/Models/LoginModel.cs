@@ -7,7 +7,7 @@ namespace PhotoAlbum.WEB.Models
         [Required(ErrorMessage = "The field cann`t be empty")]
         [EmailAddress]
         public string Email { get; set; }
-        [Required]
+        [Required(ErrorMessage = "The field cann`t be empty")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
     }
