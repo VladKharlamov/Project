@@ -6,7 +6,7 @@ namespace PhotoAlbum.DAL.Interfaces
 {
     public interface IPhotoUnitOfWork : IDisposable
     {
-        IUserRepository UserRepository { get; }
+        IGenericRepository<UserProfile> UserRepository { get; }
         IGenericRepository<UserPhoto> Photos { get; }
         IGenericRepository<Like> Likes { get; }
         IGenericRepository<Comment> Comments { get; }
