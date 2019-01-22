@@ -43,7 +43,7 @@ namespace PhotoAlbum.BLL.Services
                     Birthday = userBll.Birthday,
                     Name = userBll.Name
                 };
-                _db.UserRepository.Create(userProfile);
+                _db.UserRepository.Add(userProfile);
                 await _db.SaveAsync();
                 return new OperationDetails(true, "The registration was successful", "");
             }
